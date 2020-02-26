@@ -1,0 +1,454 @@
+html
+{
+    height: 100%;
+}
+body {
+    background-image: linear-gradient(to bottom, #5f6461, #5b625f, #57605d, #535f5b, #4f5d5a, #4b5b59, #475958, #435758, #3f5558, #3b5358, #385158, #354f58);
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    display:block;
+    line-height: 1;
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    height: 100%;
+}
+
+.loginContainer {
+    width: 100%;
+    height: 80%;
+}
+
+.login-box {
+    display: inline;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    top: 50%;
+    left: 50%;
+    position: absolute;
+    transform: translate(-50%, -50%);
+    box-sizing: border-box;
+    padding: 70px 30px;
+}
+
+.avatar {
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: absolute;
+    top: -70px;
+    left: calc(50% - 50px);
+    -webkit-box-shadow: 0px 1px 11px 0px rgba(0, 0, 0, 0.7);
+    -moz-box-shadow: 0px 1px 11px 0px rgba(0, 0, 0, 0.7);
+    box-shadow: 0px 1px 11px 0px rgba(0, 0, 0, 0.7);
+}
+
+h1 {
+    margin: 0;
+    padding: 0 0 20px;
+    text-align: center;
+    font-size: 22px;
+}
+
+.login-box p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.login-box input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.login-box input[type="text"], input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.login-box input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #1c8adb;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.login-box input[type="submit"]:hover {
+    cursor: pointer;
+    background: #39dc79;
+    color: #000;
+}
+
+.login-box a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+}
+
+.login-box a:hover {
+    color: #39dc79;
+}
+
+input[type="checkbox"] {
+
+    display: inline-block;
+    width: auto;
+    overflow:hidden;
+}
+
+.registrationContainer {
+    display: inline-flex;
+    height: 100%;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+.registration-box {
+    min-width: 26%;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    position: absolute;
+    box-sizing: border-box;
+    padding-left: 30px;
+    padding-right: 30px;
+    padding-bottom: 15px;
+    padding-top: 15px;
+
+}
+
+.registration-box p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 14px;
+}
+.registration-box a
+{
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+    font-size: 14px;
+    margin-left: -15px;
+}
+.registration-box a:hover
+{
+    text-decoration: none;
+}
+
+.registration-box input {
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.registration-box input[type="text"], input[type="password"] {
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+
+.registration-box input[type="submit"] {
+    border: none;
+    outline: none;
+    height: 40px;
+    background: #1c8adb;
+    color: #fff;
+    font-size: 18px;
+    border-radius: 20px;
+}
+
+.registration-box input[type="submit"]:hover {
+    cursor: pointer;
+    background: #1c8adb;
+    color: #000;
+}
+
+.registration-box a {
+    text-decoration: none;
+    font-size: 14px;
+    color: #fff;
+}
+
+.registration-box a:hover {
+    color: #39dc79;
+}
+.registration-box select
+{
+    border: none;
+    border-bottom: 1px solid #fff;
+    background: transparent;
+    outline: none;
+    height: 40px;
+    color: #fff;
+    font-size: 16px;
+}
+.registration-box option
+{
+    color: black;
+}
+
+input[type="checkbox"] {
+
+    display: inline-block;
+    width: auto;
+
+}
+#logo {
+    margin-right: 10%;
+    float: left;
+}
+
+#l_menu {
+    float: right;
+
+}
+
+.dashboard-container {
+    margin-top: 100px;
+    height: 60%;
+
+}
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 75%;
+    width: 100%;
+    align-self: center;
+
+}
+.dashboard-container-column {
+    float: left;
+    padding: 10px;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+
+}
+
+.dashboard-container-column.side {
+    width: 20%;
+    margin: 40px auto 50px;
+    max-width:960px;
+    background: rgba(0, 0, 0, 0.5);
+
+
+}
+
+.dashboard-container-column.middle {
+    width: 40%;
+    word-wrap: break-word;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+.dashboard-container:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+@media screen and (max-width: 600px) {
+    .dashboard-container-column.side, .dashboard-container-column.width {
+        width: 100%;
+
+    }
+}
+.profilecontainer
+{
+    background: rgb(255, 255, 255);
+    border-radius: 10px;
+    -webkit-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    padding-bottom: 20%;
+    height: 300px;
+    text-align: center;
+    width: 200px;
+
+}
+.profilepic
+{
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 150px;
+    max-height: 150px;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    border: 4px solid white;
+    overflow: hidden;
+    transform: translateX(0%) translateY(40%);
+    -webkit-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    -moz-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    text-align: center;
+}
+
+.profilepic img
+{
+    left:50%;
+    height: 100%;
+    max-height: 100%;
+    position: absolute;
+    transform: translateX(-50%);
+    transition: all 0.15s ease-out;
+    width: auto;
+
+}
+.profile_info
+{
+    margin-top: 75px;
+}
+.profile_info_name
+{
+    color:black;
+    font-size: 14px;
+    font-family: sans-serif;
+}
+.layer {
+    height: 50%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+
+}
+.wrapimage
+{
+    bottom: -60px;
+    height: 78px;
+    left: 0;
+    position: relative;
+    width: 100%;
+    text-align:center;
+}
+.wrapimage:after
+{
+    content:'\A';
+    position:absolute;
+    width:100%; height:100%;
+    top:0; left:0;
+    background:rgba(0,0,0,0.4);
+    opacity:0;
+    transition: all 0.5s;
+    -webkit-transition: all 0.5s;
+
+}
+.wrapimage:hover:after {
+    opacity:1;
+
+}
+.wrapimage .edit
+{
+    visibility: hidden;
+    transform: translateX(0%);
+    transform: translateY(100%);
+    font-size:14px;
+    cursor:pointer;
+}
+.wrapimage:hover .edit
+{
+    visibility: visible;
+}
+.hidden-input {
+    position: absolute;
+}
+#upload_link{
+    text-decoration: none;
+}
+#upload
+{
+    display:none;
+}
+
+
+.admin-dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: 1fr;
+    grid-column-gap: 0px;
+    grid-row-gap: 0px;
+    height: 80%;
+    width: 100%;
+    text-align: center;
+    color: white;
+
+    margin-top: 4%;
+}
+.admin-dashboard-left
+{
+    grid-area: 1 / 1 / 2 / 2;
+    display: inline-block;
+
+}
+.admin-dashboard-left h2
+{
+    color:white;
+
+}
+.admin-dashboard-middle
+{
+    display: inline-block;
+    color:white;
+    grid-area: 1 / 2 / 2 / 3;
+}
+.admin-dashboard-middle #myInput
+{
+    background-image: url('/images/searchicon.png');
+    background-position: 10px 10px;
+    background-repeat: no-repeat;
+    width: 100%;
+    font-size: 16px;
+    padding: 12px 20px 12px 40px;
+    border: 1px solid #ddd;
+    margin-bottom: 12px;
+}
+.admin-dashboard-right {
+    grid-area: 1 / 3 / 2 / 4;
+}
+.search
+{
+    display:inline-flex;
+    width: 100%;
+    margin-bottom: 2%;
+}
+.search #search_input
+{
+
+}
+.searchbutton
+{
+    left:50%;
+}
+.btn-style {
+    border-style: solid;
+    border-width: 3px;
+}
+.form-control
+{
+    width: 80%;
+}
+.admin_user_radio
+{
+    margin-left: 1%;
+}
+#account_table_wrapper
+{
+    color: white;
+}
