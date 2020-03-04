@@ -1,8 +1,8 @@
 <?php
 
-define('DB_USER', 'root');
-define('DB_PASSWORD', 'ksupassword1');
-define('HOST', 'localhost');
+define('DB_USER', 'remoteRoot');
+define('DB_PASSWORD', '@KsuPassword1');
+define('HOST', 'ksuprojects.com');
 define('DB', 'domainproject');
 
 $options = array (
