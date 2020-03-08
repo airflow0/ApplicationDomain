@@ -27,7 +27,7 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-	<div class="bd-highlight" style="padding: 20px">
+	<div class="bd-highlight" style="padding: 20px; color: #FFFFFF">
 		<div>
 			<h1 style="text-align: left; font-size: 26px; padding-bottom: 15px">Ledger<span style="float: right">
 				<div class="input-group mb-3">
@@ -38,9 +38,9 @@ if ($_SESSION['isAdmin'] = true) {
 				</div>
 			</span></h1>
 		</div>
-		<div class="border border-secondary rounded">
+		<div class="border border-secondary rounded bg-dark">
 			<div style="padding: 10px">
-				<table id="ledger-table-view" class="table hover table-bordered" style="width: 100%">
+				<table id="ledger-table-view" class="table hover table-bordered table-dark" style="width: 100%">
 					<thead>
 						<tr>
 							<th>DATE OF ENTRY</th>
