@@ -27,7 +27,7 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-	<div style="padding: 20px">
+	<div class="bd-highlight" style="padding: 20px">
 		<div>
 			<h1 style="text-align: left; font-size: 26px; padding-bottom: 15px">Ledger<span style="float: right">
 				<div class="input-group mb-3">
