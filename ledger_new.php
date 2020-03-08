@@ -15,7 +15,7 @@ if ($_SESSION['isAdmin'] = true) {
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" type="text/css" href="css/style.css">
 	<!-- Datatables -->
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -27,7 +27,7 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-	<div style="padding: 50px">
+	<div style="padding: 20px">
 		<div>
 			<h1 style="text-align: left; font-size: 26px; padding-bottom: 15px">Ledger<span style="float: right">
 				<div class="input-group mb-3">
