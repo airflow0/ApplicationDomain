@@ -34,13 +34,13 @@ $email = $userinfo['email'];
 <div class="navibar row d-inline-flex" style="margin: 0px;width: 100%;max-width: 100%;max-height: 100%;height: 10%;min-height: 10%;min-width: 100%;">
     <div class="col d-inline-flex justify-content-center align-items-center align-content-center" style="padding: 0px;min-height: 100%;width: 100%;height: 100%;min-width: 10%;max-height: 100%;">
         <a href="/dashboard">
-            <img src="images/logo.png" style="margin-left: -30%;max-width: 96%;width: 96px;height: 100px;max-height: 100%;"/>
+            <img src="images/logo-revised.png" style="margin-left: -30%;max-width: 96%;width: 96px;height: 100px;max-height: 100%;"/>
         </a>
 
     </div>
     <div class="col text-center d-inline-flex justify-content-center align-items-center" style="padding: 0px;min-width: 70%;">
         <ul class="list-unstyled d-flex flex-fill justify-content-center" style="margin-top: 0px;margin-bottom: 0px;">
-            <li class="d-inline-flex flex-fill justify-content-center align-items-center"">
+            <li class="d-inline-flex flex-fill justify-content-center align-items-center">
             <a class="d-inline-flex flex-fill justify-content-center" href="">Charts</a>
             <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #2</a>
             <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #3</a>
