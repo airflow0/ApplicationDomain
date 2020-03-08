@@ -1,3 +1,13 @@
+<?php
+
+require('database.php');
+if ($_SESSION['isAdmin'] = true) {
+    require('admin_navigation.php');
+} else {
+    require('navigation.php');
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
