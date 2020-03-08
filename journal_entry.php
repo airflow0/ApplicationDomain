@@ -27,7 +27,7 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-	<div style="padding: 50px; color: #FFFFFF">
+	<div style="padding: 20px; color: #FFFFFF">
 		<h1 style="text-align: left; font-size: 24px; padding-bottom: 5px">Journal Entry #</h1>
 		<div class="d-flex justify-content-between" style="padding-bottom: 5px">
 			<div class="p-2">
