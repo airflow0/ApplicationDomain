@@ -1,3 +1,13 @@
+<?php
+
+require('database.php');
+if ($_SESSION['isAdmin'] = true) {
+    require('admin_navigation.php');
+} else {
+    require('navigation.php');
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -5,7 +15,7 @@
 	<!-- Required meta tags -->
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<!-- Datatables -->
 	<script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
 	<script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
@@ -17,7 +27,7 @@
 </head>
 
 <body>
-	<div style="padding: 50px">
+	<div style="padding: 50px; color: #FFFFFF">
 		<h1 style="text-align: left; font-size: 24px; padding-bottom: 5px">Journal Entry #</h1>
 		<div class="d-flex justify-content-between" style="padding-bottom: 5px">
 			<div class="p-2">
@@ -37,9 +47,9 @@
 				</div>
 			</div>
 		</div>
-		<div class="border border-secondary rounded">
+		<div class="border border-secondary rounded bg-dark">
 			<div style="padding: 10px">
-				<table id="journal-table-view" class="table hover table-bordered" style="width: 100%">
+				<table id="journal-table-view" class="table hover table-bordered table-dark" style="width: 100%">
 					<thead>
 						<tr>
 							<th>#</th>
