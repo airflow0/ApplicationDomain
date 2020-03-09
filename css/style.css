@@ -3,7 +3,7 @@ html
     height: 100%;
 }
 body {
-    background-image: linear-gradient(to bottom, #5f6461, #5b625f, #57605d, #535f5b, #4f5d5a, #4b5b59, #475958, #435758, #3f5558, #3b5358, #385158, #354f58);
+    background-image: linear-gradient(to right bottom, #404040, #48484a, #4f5054, #55585e, #5b6168, #606971, #647179, #697a81, #6e848a, #748d92, #799799, #80a1a0);
     font-family: sans-serif;
     margin: 0;
     padding: 0;

@@ -130,19 +130,83 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         </table>
     </div>
 </div>
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" disabled style="margin-left:60px;">
-    Add Account
-</button>
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" disabled>
-    Edit Account
-</button>
-<a href="accountView" class="btn btn-secondary " role="button" aria-pressed="true"> View Account</a>
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModalCenter" disabled>
-    Delete Account
-</button>
+<div>
+<?php
+if($_SESSION['isAdmin'])
+{
+   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#addAccountModal\" style=\"margin-left:60px;\">Add Account</button>";
+   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
+   echo "<a href=\"accountView\" class=\"btn btn-secondary \" role=\"button\" aria-pressed=\"true\" style=\"margin-left:5px;\" > View Account</a> ";
+   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:1px;\" >Delete Account</button>";
+}
+
+?>
 </div>
 
+<!-- Modal -->
+<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAccountModalLabel">Modal title</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Account Name -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" id="basic-addon1">Account Name</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="accountName">
+                </div>
+                <!-- Account Category -->
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01">
+                        <option selected>Choose...</option>
+                        <option value="1">One</option>
+                        <option value="2">Two</option>
+                        <option value="3">Three</option>
+                    </select>
+                </div>
+                <!-- Account Description -->
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">With textarea</span>
+                    </div>
+                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
 <script type="text/javascript">
+    $('#addAccountButton').click( function ()
+    {
+        var accountname = $('#accountName').val();
+        $.ajax ({
+           url: "post/addAccountPost.php",
+           method: "POST",
+           data: {accountname:accountname},
+           success:function(data)
+           {
+
+           }
+        });
+    });
     $('#subcategoryCheck').click(function () {
         var checked = this.checked;
         console.log(checked);
