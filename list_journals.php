@@ -40,63 +40,62 @@ if ($_SESSION['isAdmin'] = true) {
             <a class="btn btn-primary" href="#" role="button">New journal entry</a>
         </div>
     </div>
-</div>
 
-
-<div class="border border-secondary rounded bg-dark" style="width: 100%">
-    <div style="padding: 10px; width: 100%">
-        <table id="list-journal-table-view" class="table hover table-bordered table-dark" style="width: 100%">
-            <thead>
-            <tr>
-                <th>JOURNAL #</th>
-                <th>DATE</th>
-                <th>ACCOUNT</th>
-                <th>NAME</th>
-                <th>STATUS</th>
-                <th></th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>2</td>
-                <td>03/01/2020</td>
-                <td>Payroll</td>
-                <td>tjohnson</td>
-                <td>Pending</td>
-                <td>
-                    <div class="d-flex">
-                        <div class="p-2">
-                            <a class="btn btn-secondary" href="#" role="button">View</a>
+    <div class="border border-secondary rounded bg-dark" style="width: 100%">
+        <div style="padding: 10px; width: 100%">
+            <table id="list-journal-table-view" class="table hover table-bordered table-dark" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>JOURNAL #</th>
+                    <th>DATE</th>
+                    <th>ACCOUNT</th>
+                    <th>NAME</th>
+                    <th>STATUS</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>2</td>
+                    <td>03/01/2020</td>
+                    <td>Payroll</td>
+                    <td>tjohnson</td>
+                    <td>Pending</td>
+                    <td>
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <a class="btn btn-secondary" href="#" role="button">View</a>
+                            </div>
+                            <div class="p-2">
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        data-target="#modalStatus">Update status
+                                </button>
+                            </div>
                         </div>
-                        <div class="p-2">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                    data-target="#modalStatus">Update status
-                            </button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>03/03/2020</td>
+                    <td>Payroll</td>
+                    <td>tjohnson</td>
+                    <td>Pending</td>
+                    <td>
+                        <div class="d-flex">
+                            <div class="p-2">
+                                <a class="btn btn-secondary" href="#" role="button">View</a>
+                            </div>
+                            <div class="p-2">
+                                <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                        data-target="#modalStatus">Update status
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td>3</td>
-                <td>03/03/2020</td>
-                <td>Payroll</td>
-                <td>tjohnson</td>
-                <td>Pending</td>
-                <td>
-                    <div class="d-flex">
-                        <div class="p-2">
-                            <a class="btn btn-secondary" href="#" role="button">View</a>
-                        </div>
-                        <div class="p-2">
-                            <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                    data-target="#modalStatus">Update status
-                            </button>
-                        </div>
-                    </div>
-                </td>
-            </tr>
-            </tbody>
-        </table>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
 </div>
 

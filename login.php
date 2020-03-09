@@ -29,8 +29,8 @@ if (isset($_POST['login'])) {
 
     $date1 = time();
     $date2 = strtotime(date($password_expiration_date));
-    $date3 = $date2-$date1;
-    $date4 = round($date3/ (3600*24));
+    $date3 = $date2 - $date1;
+    $date4 = round($date3 / (3600 * 24));
     $attempts = 3;
     $lgNonIDCount = checkNonIDAttempts($pdo, $ip, $diff);
     if ($lgNonIDCount >= $attempts) {
@@ -39,13 +39,11 @@ if (isset($_POST['login'])) {
         if ($verified === false) {
             updateNonIDAttempt($pdo, $ip, $t);
             $lgNonIDCount = checkNonIDAttempts($pdo, $ip, $diff);
-            $errormsg = "Invalid email. You have out ". $lgNonIDCount ." of ".$attempts." attempts left to login!";
+            $errormsg = "Invalid email. You have out " . $lgNonIDCount . " of " . $attempts . " attempts left to login!";
         } else {
-            if($date4 <= 0) {
+            if ($date4 <= 0) {
                 $errormsg = "Password has expired!";
-                }
-            else
-            {
+            } else {
                 if ($loginAttempt <= $attempts) {
                     if ($isActivated === 1) {
                         $hashedPassword = password_verify($loginpassword2, $passwordConfirm);
@@ -55,16 +53,13 @@ if (isset($_POST['login'])) {
                             if ($isAdmin === 1 || $isManager === 1) {
                                 $_SESSION['isAdmin'] = true;
                                 $_SESSION['isManager'] = true;
-                                if($date4 <= 3)
-                                {
+                                if ($date4 <= 3) {
                                     updateLoginAttempt($pdo, 0, $emailConfirm);
                                     $errormsg = "You have less than 3 days before your password expires! Please contact an admin!";
                                     echo "<script type='text/javascript'>alert('$errormsg');</script>";
                                     echo "<script>setTimeout(\"location.href = '/admin_cp';\",1500);</script>";
                                     exit;
-                                }
-                                else
-                                {
+                                } else {
                                     updateLoginAttempt($pdo, 0, $emailConfirm);
                                     header('Location: admin_cp');
                                     exit;
@@ -72,16 +67,13 @@ if (isset($_POST['login'])) {
 
 
                             } else {
-                                if($date4 <= 3)
-                                {
+                                if ($date4 <= 3) {
                                     updateLoginAttempt($pdo, 0, $emailConfirm);
                                     $errormsg = "You have less than 3 days before your password expires! Please contact an admin!";
                                     echo "<script type='text/javascript'>alert('$errormsg');</script>";
                                     header("Refresh: 0.1; url=dashboard");
                                     exit;
-                                }
-                                else
-                                {
+                                } else {
                                     updateLoginAttempt($pdo, 0, $emailConfirm);
                                     header('Location: dashboard');
                                     exit;
@@ -112,6 +104,7 @@ function updateNonIDAttempt(PDO $pdo, $ip, $t)
     $stmt->bindValue(":time", $t);
     $stmt->execute();
 }
+
 function checkNonIDAttempts(PDO $pdo, $ip, $diff)
 {
     $stmt = $pdo->prepare("SELECT count(*) from login_limit WHERE ipAddress= :ip AND timeDiff > :timeDiff");
@@ -121,6 +114,7 @@ function checkNonIDAttempts(PDO $pdo, $ip, $diff)
     $count = $stmt->fetchColumn();
     return $count;
 }
+
 function updateLoginAttempt(PDO $pdo, $data, $email)
 {
 
