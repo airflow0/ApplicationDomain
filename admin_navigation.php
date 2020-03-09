@@ -54,6 +54,13 @@ $picture = $userinfo['picture_directory'];
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link nav-hover-link" href="journal_entry">Add Journal Entry</a>
             </li>
+            <?php
+            if($_GET['isAdmin'])
+            {
+
+            }
+
+            ?>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link nav-hover-link" href="admin_user_table">User Management</a>
             </li>

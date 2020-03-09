@@ -1,7 +1,7 @@
 <?php
 
 
-if ($_SESSION['isAdmin'] = true) {
+if ($_SESSION['isAdmin'] == true) {
     require('admin_navigation.php');
 } else {
     require('navigation.php');
