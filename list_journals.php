@@ -29,12 +29,12 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-	<div style="padding: 50px">
+	<div style="padding: 20px; color: #FFFFFF">
 		<h1 style="text-align: left; font-size: 24px; padding-bottom: 5px">List of General Journal Entries</h1>
 
-		<div class="border border-secondary rounded" style="width: 75%">
+		<div class="border border-secondary rounded bg-dark" style="width: 75%">
 			<div style="padding: 10px; width: 100%">
-				<table id="list-journal-table-view" class="table hover table-bordered" style="width: 100%">
+				<table id="list-journal-table-view" class="table hover table-bordered table-dark" style="width: 100%">
 					<thead>
 						<tr>
 							<th>JOURNAL #</th>
@@ -54,10 +54,10 @@ if ($_SESSION['isAdmin'] = true) {
 							<td>Pending</td>
 							<td><div class="d-flex">
 								<div class="p-2">
-									<a class="btn btn-secondary" href="#" role="button">View</a>
+									<a class="btn btn-secondary btn-sm" href="#" role="button">View</a>
 								</div>
 								<div class="p-2">
-									<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalStatus">Update status</button>
+									<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modalStatus">Update status</button>
 								</div>
 							</div>
 						</td>
@@ -70,10 +70,10 @@ if ($_SESSION['isAdmin'] = true) {
 						<td>Pending</td>
 						<td><div class="d-flex">
 							<div class="p-2">
-								<a class="btn btn-secondary" href="#" role="button">View</a>
+								<a class="btn btn-secondary btn-sm" href="#" role="button">View</a>
 							</div>
 							<div class="p-2">
-								<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalStatus">Update status</button>
+								<button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#modalStatus">Update status</button>
 							</div>
 						</div></td>
 					</tr>
