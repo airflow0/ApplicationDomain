@@ -30,14 +30,14 @@ if ($_SESSION['isAdmin'] = true) {
 </head>
 
 <body>
-<div style="padding: 20px; color: #FFFFFF">
-    <div class="d-flex justify-content-between">
+<div class="body-format" style="padding: 20px; color: #FFFFFF">
+    <div class="d-flex justify-content-between" style="margin-bottom: -15px">
         <div class="p-2">
-            <h1 style="text-align: left; font-size: 24px">List of General Journal Entries</h1>
+            <h1 style="text-align: left; font-size: 26px">List of General Journal Entries</h1>
         </div>
 
         <div class="p-2">
-            <a class="btn btn-primary" href="#" role="button">New journal entry</a>
+            <a class="btn btn-primary" href="journal_entry" role="button">Add journal entry</a>
         </div>
     </div>
 

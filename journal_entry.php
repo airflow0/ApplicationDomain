@@ -23,12 +23,12 @@ if ($_SESSION['isAdmin'] = true) {
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 	
-	<title>CountOnUs - Journal View</title>
+	<title>CountOnUs - Journal Entry</title>
 </head>
 
 <body>
-	<div style="padding: 20px; color: #FFFFFF">
-		<h1 style="text-align: left; font-size: 24px; padding-bottom: 5px">Journal Entry #</h1>
+	<div class="body-format" style="padding: 20px; color: #FFFFFF">
+		<h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Journal Entry #</h1>
 		<div class="d-flex justify-content-between" style="padding-bottom: 5px">
 			<div class="p-2">
 				<div class="input-group mb-3">
