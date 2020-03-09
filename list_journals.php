@@ -31,7 +31,7 @@ if ($_SESSION['isAdmin'] = true) {
 
 <body>
 <div style="padding: 20px; color: #FFFFFF">
-    <div class="d-flex justify-content-between" style="padding-bottom: 5px">
+    <div class="d-flex justify-content-between">
         <div class="p-2">
             <h1 style="text-align: left; font-size: 24px">List of General Journal Entries</h1>
         </div>

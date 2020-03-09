@@ -45,16 +45,16 @@ $picture = $userinfo['picture_directory'];
         <ul class="navbar-nav w-100 justify-content-center" >
 
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
-                <a class="nav-link" href="charts">Charts of Accounts</a>
+                <a class="nav-link" href="charts">Chart of Accounts</a>
             </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
-                <a class="nav-link" href="#">Temporary Link #3 </a>
+                <a class="nav-link" href="#">List of Journal Entries</a>
             </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
-                <a class="nav-link" href="#">Temporary Link #4</a>
+                <a class="nav-link" href="#">Add Journal Entry</a>
             </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
-                <a class="nav-link" href="#">Temporary Link #5</a>
+                <a class="nav-link" href="#">User Management</a>
             </li>
         </ul>
         <ul class="nav navbar-nav justify-content-end">
