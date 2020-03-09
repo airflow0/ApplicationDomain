@@ -37,7 +37,7 @@ $picture = $userinfo['picture_directory'];
 
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark" style="margin-bottom: 30px; background-color: transparent">
+<nav class="navbar navbar-expand-sm " style="margin-bottom: 30px; background-color: transparent; color:white">
     <a class="navbar-brand" href="admin_cp"><img src="images/logo-revised.png" width="180" height="40" class="d-inline-block align-top"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>

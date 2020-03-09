@@ -39,7 +39,12 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             var table = $('#account_table').DataTable();
 
             $('#account_table tbody').on('click', 'tr', function () {
-                $(this).toggleClass('selected');
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
             });
 
             $('#account_table tbody').on('dblclick', 'tr', function () {
@@ -54,9 +59,19 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 if( table.rows('.selected').any())
                 {
                     var data = table.row('.selected').data();
-                    if(window.confirm("Do you really want to delete the account " + data[0]))
+                    if(window.confirm("Do you really want to delete the account " + data[0] + ", Category data: " + data[3]))
                     {
-                        alert("Deleted");
+                        var account_name = data[0];
+                        var category = data[3];
+                        $.ajax({
+                            url: 'post/deleteAccountPost',
+                            method: 'post',
+                            data: {account_name:account_name, category:category},
+                            success(data)
+                            {
+                                alert(data);
+                            }
+                        });
                     }
                 }
                 else
@@ -69,10 +84,20 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     </script>
 </head>
 <body>
-<h3 style="text-align: center; margin-top: 100px; color: white; font-family: sans-serif; font-weight: bold"> Chart of Accounts</h3>
-<div class="d-flex flex-column" style="margin-left: 50px; margin-right: 50px;">
+<div style="padding: 20px; color: #FFFFFF">
+    <div class="d-flex justify-content-between">
+        <div class="p-2">
+            <h1 style="text-align: left; font-size: 24px">Chart of Accounts</h1>
+        </div>
+
+        <div class="p-2">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEmail">Email</button>
+        </div>
+    </div>
+
+<div class="d-flex flex-column">
     <div class="p-2">
-        <table id="account_table" class="table table-dark">
+        <table id="account_table" class="table hover table-bordered table-dark">
             <thead>
             <tr>
                 <th scope="col">Account Name</th>
@@ -118,14 +143,14 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             <?php endwhile; ?>
             <?php
             while ($rowAssets = $revenue->fetch()):
-            ?>
-            <tr>
-                <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
-                <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
-                <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
-                <td>Revenue</td>
-                <td><?php echo htmlspecialchars($rowAssets['date']) ?></td>
-            </tr>
+                ?>
+                <tr>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
+                    <td>Revenue</td>
+                    <td><?php echo htmlspecialchars($rowAssets['date']) ?></td>
+                </tr>
             <?php endwhile; ?>
             <?php
             while ($rowAssets = $expenses->fetch()):
@@ -143,21 +168,21 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     </div>
 </div>
 <div>
-<?php
-if($_SESSION['isAdmin'])
-{
-   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#addAccountModal\" style=\"margin-left:60px;\">Add Account</button>";
-   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
-   echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-left:5px;\" id=\"deleteAccount\">Delete Account</button>";
-}
+    <?php
+    if($_SESSION['isAdmin'])
+    {
+        echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-left:5px;\" id=\"deleteAccount\">Delete Account</button>";
+    }
 
-?>
+    ?>
 
 </div>
-
+</div>
 <!-- Add Account Modal -->
-<div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bg-dark" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="addAccountModalLabel">Add New Account</h5>
@@ -166,53 +191,117 @@ if($_SESSION['isAdmin'])
                 </button>
             </div>
             <form method="post" id="account_account_form" class="was-validated">
-            <div class="modal-body">
-                <!-- Account Name -->
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text" id="basic-addon1">Account Name</span>
+                <div class="modal-body">
+                    <!-- Account Name -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Account Name</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="accountName" required>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="accountName" required>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <!-- Account Category -->
-                <div class="input-group mb-3">
-                    <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Account Category</label>
+                    <!-- Account Category -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Account Category</label>
+                        </div>
+                        <select class="custom-select" id="accountCategoryOption" required>
+                            <option value="" selected>Choose...</option>
+                            <option value="1">Assets</option>
+                            <option value="2">Liability</option>
+                            <option value="3">Equity</option>
+                            <option value="4">Revenue</option>
+                            <option value="5">Expenses</option>
+                        </select>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <select class="custom-select" id="accountCategoryOption" required>
-                        <option value="" selected>Choose...</option>
-                        <option value="1">Assets</option>
-                        <option value="2">Liability</option>
-                        <option value="3">Equity</option>
-                        <option value="4">Revenue</option>
-                        <option value="5">Expenses</option>
-                    </select>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
-                </div>
-                <!-- Account Description -->
-                <div class="input-group">
-                    <div class="input-group-prepend">
-                        <span class="input-group-text">Description</span>
+                    <!-- Account Description -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id="account_description" required></textarea>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
                     </div>
-                    <textarea class="form-control" aria-label="With textarea" id="account_description" required></textarea>
-                    <div class="valid-feedback"></div>
-                    <div class="invalid-feedback"></div>
-                </div>
 
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
+                </div>
             </form>
         </div>
     </div>
 </div>
 
+<!-- Email Modal -->
+<div class="modal fade bg-dark" id="modalEmail" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Compose Email Message</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                <form>
+                    <!-- Input for email recipient(s)-->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <label for="inputTo">To</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="email" class="form-control" id="inputTo" placeholder="Enter recipient(s)' email address" required>
+                            </div>
+                            <div class="col-sm-auto">
+                                <button type="button" class="btn btn-secondary btn-sm" style="padding-left: 8px">Search</button>
+                            </div>
+                        </div>
+                    </div>
 
+                    <!-- Input for email subject-->
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-auto">
+                                <label for="inputSubject">Subject</label>
+                            </div>
+                            <div class="col-lg">
+                                <input type="text" class="form-control" id="inputSubject" placeholder="Enter subject">
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Input for email message-->
+                    <div class="form-group">
+                        <label for="inputMessage">Message</label>
+                        <textarea class="form-control" id="inputMessage" rows="12" placeholder="..."></textarea>
+                    </div>
+
+                    <!--Input for attachments-->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Attachments</span>
+                        </div>
+                        <div class="custom-file">
+                            <input type="file" class="custom-file-input" id="inputAttachment">
+                            <label class="custom-file-label" for="inputAttachment">Choose file(s)</label>
+                        </div>
+                    </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary">Send</button>
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
 
 
 <script type="text/javascript">
@@ -223,11 +312,11 @@ if($_SESSION['isAdmin'])
         var description = $('#account_description').val();
 
         $.ajax ({
-           url: "post/addAccountPost",
-           method: "POST",
-           data: {accountname:accountname, category:category, description:description},
-           success:function(data)
-           {
+            url: "post/addAccountPost",
+            method: "POST",
+            data: {accountname:accountname, category:category, description:description},
+            success:function(data)
+            {
                 if(data == 'no')
                 {
                     alert('Something went wrong!');
@@ -241,7 +330,7 @@ if($_SESSION['isAdmin'])
                     $('#loginModal').hide();
                     location.reload();
                 }
-           }
+            }
         });
     });
     $('#subcategoryCheck').click(function () {

@@ -80,7 +80,7 @@ if(isset($_POST['accountname']))
         }
         else if ($_POST['category'] == 5)
         {
-            $stmt = $pdo->prepare('INSERT into assets (accName, description, date, createdBy, LastEditBy) values (:accName, :description, :date, :createdBy, :editBy)');
+            $stmt = $pdo->prepare('INSERT into expenses (accName, description, date, createdBy, LastEditBy) values (:accName, :description, :date, :createdBy, :editBy)');
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':description', $description);
             $stmt->bindValue(':date', $time);
