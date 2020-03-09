@@ -37,7 +37,6 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     <script type="text/javascript">
         $(document).ready(function () {
             var table = $('#account_table').DataTable();
-
             $('#account_table tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
                     $(this).removeClass('selected');

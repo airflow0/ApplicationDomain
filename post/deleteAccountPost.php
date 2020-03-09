@@ -4,26 +4,41 @@ if(isset($_POST['account_name']))
 {
     $accountname = $_POST['account_name'];
     $category = $_POST['category'];
-    echo $category;
+
     if($category == 'Asset')
     {
-        echo 'Asset';
+        $stmt = $pdo->prepare('DELETE from assets WHERE accName=:accName');
+        $stmt->bindValue(':accName', $accountname);
+        $stmt->execute();
+        echo "Account securely deleted";
     }
     else if( $category == 'Liability')
     {
-        echo 'Liability';
+        $stmt = $pdo->prepare('DELETE from liability WHERE accName=:accName');
+        $stmt->bindValue(':accName', $accountname);
+        $stmt->execute();
+        echo "Account securely deleted";
     }
     else if ($category == 'Equity')
     {
-        echo 'Equity';
+        $stmt = $pdo->prepare('DELETE from equity WHERE accName=:accName');
+        $stmt->bindValue(':accName', $accountname);
+        $stmt->execute();
+        echo "Account securely deleted";
     }
     else if ($category == 'Revenue')
     {
-        echo 'Revenue';
+        $stmt = $pdo->prepare('DELETE from revenue WHERE accName=:accName');
+        $stmt->bindValue(':accName', $accountname);
+        $stmt->execute();
+        echo "Account securely deleted";
     }
     else if( $category == 'Expenses')
     {
-        echo 'Expenses';
+        $stmt = $pdo->prepare('DELETE from expenses WHERE accName=:accName');
+        $stmt->bindValue(':accName', $accountname);
+        $stmt->execute();
+        echo "Account securely deleted";
     }
 }
 ?>
