@@ -48,9 +48,6 @@ $picture = $userinfo['picture_directory'];
 
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link" href="charts">Chart of Accounts</a>
-            <li class="nav-item" style="margin-left: 30px; margin-right: 30px; ">
-                <a class="nav-link" href="charts">Charts of Accounts</a>
-            </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link" href="#">List of Journal Entries</a>
             </li>
