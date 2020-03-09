@@ -1,11 +1,6 @@
 <?php
+require('admin_navigation.php');
 
-
-if ($_SESSION['isAdmin'] == 1) {
-    require('admin_navigation.php');
-} else {
-    require('navigation.php');
-}
 $stmt = $pdo->prepare('SELECT accName from accountnames');
 $stmt->execute();
 $accountNames = $stmt->fetchAll(\PDO::FETCH_ASSOC);

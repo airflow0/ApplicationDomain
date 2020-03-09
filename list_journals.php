@@ -1,11 +1,7 @@
 <?php
 
 require('database.php');
-if ($_SESSION['isAdmin'] == 1) {
-    require('admin_navigation.php');
-} else {
-    require('navigation.php');
-}
+require('admin_navigation.php');
 ?>
 
 <!doctype html>
