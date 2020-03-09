@@ -33,7 +33,6 @@ $picture = $userinfo['picture_directory'];
     });
 </script>
 <div class="d-inline-flex p-2 ">
-
         <div class="profilecontainer">
             <div class="profilepic">
                 <img src="<?php echo $picture ?>"/>

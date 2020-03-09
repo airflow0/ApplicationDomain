@@ -39,12 +39,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             var table = $('#account_table').DataTable();
 
             $('#account_table tbody').on('click', 'tr', function () {
-                if ($(this).hasClass('selected')) {
-                    $(this).removeClass('selected');
-                } else {
-                    table.$('tr.selected').removeClass('selected');
-                    $(this).addClass('selected');
-                }
+                $(this).toggleClass('selected');
             });
 
             $('#account_table tbody').on('dblclick', 'tr', function () {
@@ -52,6 +47,24 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 var url = 'accountview?accountname=' +data[0] +'&accountid='+data[1];
                 $(location).attr('href',url);
             } );
+
+            $('#deleteAccount').click(function()
+            {
+
+                if( table.rows('.selected').any())
+                {
+                    var data = table.row('.selected').data();
+                    if(window.confirm("Do you really want to delete the account " + data[0]))
+                    {
+                        alert("Deleted");
+                    }
+                }
+                else
+                {
+                    alert('Please select an account from the List!');
+                }
+            });
+
         });
     </script>
 </head>
@@ -135,11 +148,11 @@ if($_SESSION['isAdmin'])
 {
    echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#addAccountModal\" style=\"margin-left:60px;\">Add Account</button>";
    echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
-   echo "<a href=\"accountView\" class=\"btn btn-secondary \" role=\"button\" aria-pressed=\"true\" style=\"margin-left:5px;\" > View Account</a> ";
-   echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:1px;\" >Delete Account</button>";
+   echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-left:5px;\" id=\"deleteAccount\">Delete Account</button>";
 }
 
 ?>
+
 </div>
 
 <!-- Add Account Modal -->
@@ -207,15 +220,27 @@ if($_SESSION['isAdmin'])
     {
         var accountname = $('#accountName').val();
         var category = $('#accountCategoryOption').val();
-        var description = $('account_description').val();
+        var description = $('#account_description').val();
 
         $.ajax ({
            url: "post/addAccountPost",
            method: "POST",
-           data: {accountname:accountname, category:category},
+           data: {accountname:accountname, category:category, description:description},
            success:function(data)
            {
-                window.alert(data);
+                if(data == 'no')
+                {
+                    alert('Something went wrong!');
+                }
+                else if(data == 'existerror')
+                {
+                    alert('The account name already exists in the Database, please try with a different account name!');
+                }
+                else
+                {
+                    $('#loginModal').hide();
+                    location.reload();
+                }
            }
         });
     });
