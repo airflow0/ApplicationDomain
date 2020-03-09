@@ -61,7 +61,7 @@ $picture = $userinfo['picture_directory'];
         <ul class="nav navbar-nav justify-content-end">
 
             <li class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <a class="nav-link dropdown-toggle" id="navbaruser" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                     <img src="<?php echo $picture ?>" class="rounded-circle z-depth2" width="50" height="50" style="margin-right: 5px" >
                     <?php echo $f_display ?>  <?php print' '.$l_display ?>
                 </a>

@@ -481,3 +481,9 @@ input[type="checkbox"] {
     color: #ACACAC;
     font-size:24px;
 }
+#navbaruser
+{
+    text-decoration: none;
+    color:white;
+    font-size: 20px;
+}

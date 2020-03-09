@@ -87,7 +87,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 <div style="padding: 20px; color: #FFFFFF">
     <div class="d-flex justify-content-between">
         <div class="p-2">
-            <h1 style="text-align: left; font-size: 24px">Chart of Accounts</h1>
+            <h1 style="text-align: left; font-size: 24px;">Chart of Accounts</h1>
         </div>
 
         <div class="p-2">
