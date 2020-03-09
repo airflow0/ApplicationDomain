@@ -30,7 +30,6 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="css/style.css">
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
@@ -143,42 +142,51 @@ if($_SESSION['isAdmin'])
 ?>
 </div>
 
-<!-- Modal -->
+<!-- Add Account Modal -->
 <div class="modal fade" id="addAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="addAccountModalLabel">Modal title</h5>
+                <h5 class="modal-title" id="addAccountModalLabel">Add New Account</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
             </div>
+            <form method="post" id="account_account_form" class="was-validated">
             <div class="modal-body">
                 <!-- Account Name -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
                         <span class="input-group-text" id="basic-addon1">Account Name</span>
                     </div>
-                    <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="accountName">
+                    <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="accountName" required>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <!-- Account Category -->
                 <div class="input-group mb-3">
                     <div class="input-group-prepend">
-                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                        <label class="input-group-text" for="inputGroupSelect01">Account Category</label>
                     </div>
-                    <select class="custom-select" id="inputGroupSelect01">
-                        <option selected>Choose...</option>
-                        <option value="1">One</option>
-                        <option value="2">Two</option>
-                        <option value="3">Three</option>
+                    <select class="custom-select" id="accountCategoryOption" required>
+                        <option value="" selected>Choose...</option>
+                        <option value="1">Assets</option>
+                        <option value="2">Liability</option>
+                        <option value="3">Equity</option>
+                        <option value="4">Revenue</option>
+                        <option value="5">Expenses</option>
                     </select>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
                 </div>
                 <!-- Account Description -->
                 <div class="input-group">
                     <div class="input-group-prepend">
-                        <span class="input-group-text">With textarea</span>
+                        <span class="input-group-text">Description</span>
                     </div>
-                    <textarea class="form-control" aria-label="With textarea"></textarea>
+                    <textarea class="form-control" aria-label="With textarea" id="account_description" required></textarea>
+                    <div class="valid-feedback"></div>
+                    <div class="invalid-feedback"></div>
                 </div>
 
             </div>
@@ -186,6 +194,7 @@ if($_SESSION['isAdmin'])
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
             </div>
+            </form>
         </div>
     </div>
 </div>
@@ -197,13 +206,16 @@ if($_SESSION['isAdmin'])
     $('#addAccountButton').click( function ()
     {
         var accountname = $('#accountName').val();
+        var category = $('#accountCategoryOption').val();
+        var description = $('account_description').val();
+
         $.ajax ({
-           url: "post/addAccountPost.php",
+           url: "post/addAccountPost",
            method: "POST",
-           data: {accountname:accountname},
+           data: {accountname:accountname, category:category},
            success:function(data)
            {
-
+                window.alert(data);
            }
         });
     });
