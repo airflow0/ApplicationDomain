@@ -63,7 +63,7 @@ $picture = $userinfo['picture_directory'];
                 }
                 else
                 {
-                    
+
                 }
             ?>
         </ul>

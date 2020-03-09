@@ -2,6 +2,12 @@
 
 require('admin_navigation.php');
 require('database.php');
+
+if ($_SESSION['isAdmin'] == 1) {
+    require('admin_navigation.php');
+} else {
+    require('navigation.php');
+}
 $f_display = $l_display = $d_display = $a_display =  $picture = "";
 $clientID = $_SESSION['userid'];
 
