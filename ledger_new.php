@@ -38,6 +38,7 @@ if ($_SESSION['isAdmin'] = true) {
 				</div>
 			</span></h1>
 		</div>
+
 		<div class="border border-secondary rounded bg-dark">
 			<div style="padding: 10px">
 				<table id="ledger-table-view" class="table hover table-bordered table-dark" style="width: 100%">

@@ -86,7 +86,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 <div style="padding: 20px; color: #FFFFFF">
     <div class="d-flex justify-content-between">
         <div class="p-2">
-            <h1 style="text-align: left; font-size: 24px;">Chart of Accounts</h1>
+            <h1 style="text-align: left; font-size: 26px; margin-bottom:-5px">Chart of Accounts</h1>
         </div>
 
         <div class="p-2">
@@ -94,8 +94,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         </div>
     </div>
 
-<div class="d-flex flex-column">
-    <div class="p-2">
+    <div class="border border-secondary rounded bg-dark">
+        <div style="padding: 10px">
         <table id="account_table" class="table hover table-bordered table-dark">
             <thead>
             <tr>
@@ -170,9 +170,9 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     <?php
     if($_SESSION['isAdmin'])
     {
-        echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-left:5px;\" id=\"deleteAccount\">Delete Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"deleteAccount\">Delete Account</button>";
     }
 
     ?>
