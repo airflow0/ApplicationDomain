@@ -1,7 +1,6 @@
 <?php
-
-require('admin_navigation.php');
 require('database.php');
+require('admin_navigation.php');
 $f_display = $l_display = $d_display = $a_display =  $picture = "";
 $clientID = $_SESSION['userid'];
 

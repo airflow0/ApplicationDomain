@@ -8,6 +8,7 @@ if(!$_SESSION['loggedin'])
 
 $f_display = $l_display = $d_display = $a_display =  $picture = "";
 $clientID = $_SESSION['userid'];
+$admin = $_SESSION['isAdmin'];
 
 $stmt = $pdo->prepare('SELECT firstname, lastname, dateofbirth, address, picture_directory FROM account WHERE id=:id');
 $stmt->bindValue(":id", $clientID);
@@ -37,8 +38,19 @@ $picture = $userinfo['picture_directory'];
 
 </head>
 <body>
+</body>
 <nav class="navbar navbar-expand-sm shadow p-3 mb-5" style="background-color:#333F50; color:white">
-    <a class="navbar-brand" href="admin_cp"><img src="images/logo-revised.png" width="180" height="40" class="d-inline-block align-top"/></a>
+    <a class="navbar-brand" href="<?php
+    if($admin == "1")
+    {
+        echo "admin_cp";
+    }
+    else
+    {
+        echo "dashboard";
+    }
+
+    ?>"><img src="images/logo-revised.png" width="180" height="40" class="d-inline-block align-top"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -55,17 +67,19 @@ $picture = $userinfo['picture_directory'];
                 <a class="nav-link nav-hover-link" href="journal_entry">Add Journal Entry</a>
             </li>
             <?php
-                if($_SESSION['isAdmin'] == 1)
-                {
-                    echo "<li class=\"nav-item\" style=\"margin-left: 30px; margin-right: 30px;\">
+
+            if($admin == "1")
+            {
+                echo "<li class=\"nav-item\" style=\"margin-left: 30px; margin-right: 30px;\">
                 <a class=\"nav-link nav-hover-link\" href=\"admin_user_table\">User Management</a>
             </li>";
-                }
-                else
-                {
-                    
-                }
+            }
+            else
+            {
+
+            }
             ?>
+
         </ul>
         <ul class="nav navbar-nav justify-content-end">
 

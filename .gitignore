@@ -1,3 +1,8 @@
 
 *.driveupload
 .idea/misc.xml
+.idea/deployment.xml
+.idea/modules.xml
+.idea/vcs.xml
+.idea/workspace.xml
+.idea/www.iml

@@ -1,11 +1,6 @@
 <?php
+require('admin_navigation.php');
 
-
-if ($_SESSION['isAdmin'] == 1) {
-    require('admin_navigation.php');
-} else {
-    require('navigation.php');
-}
 $stmt = $pdo->prepare('SELECT accName from accountnames');
 $stmt->execute();
 $accountNames = $stmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -211,10 +206,10 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     <?php
     if($_SESSION['isAdmin'])
     {
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" style=\"margin-left:5px;\" id='EditAccount'>Edit Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"deleteAccount\">Delete Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"viewEntryLog\">View Entry Log</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px\" data-toggle=\"modal\" data-toggle = \"tooltip\" data-placement = \"bottom\" title='Add New Account To Chart' data-target=\"#addAccountModal\" >Add Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" data-toggle = \"tooltip\" data-placement = \"bottom\" title='Edit an Account in the Chart' style=\"margin-left:5px;\" id='EditAccount'>Edit Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" data-toggle = \"tooltip\" data-placement = \"bottom\" title='Delete an Account from the Chart' id=\"deleteAccount\">Delete Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" data-toggle = \"tooltip\" data-placement = \"bottom\" title='View the Entry Log for the Chart' id=\"viewEntryLog\">View Entry Log</button>";
     }
 
     ?>
