@@ -69,6 +69,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                             success(data)
                             {
                                 alert(data);
+                                location.reload();
                             }
                         });
                     }
@@ -78,6 +79,40 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                     alert('Please select an account from the List!');
                 }
             });
+            $('#EditAccount').click(function()
+                {
+                    if(table.row('.selected').any())
+                    {
+                        var data = table.row('.selected').data();
+                        $('#EditAccountModal').modal('show');
+                        $('#EditAccountModal #editAccountName').val(data[0]);
+                        if(data[3] == 'Asset')
+                        {
+
+                        }
+                        else if(data[3] == 'Liabilities')
+                        {
+
+                        }
+                        else if(data[3] == 'Liabilities')
+                        {
+
+                        }
+                        else if(data[3] == 'Liabilities')
+                        {
+
+                        }
+                        else if(data[3] == 'Liabilities')
+                        {
+
+                        }
+                    }
+                    else
+                    {
+                        alert('You must select a row in the table before modification!');
+                    }
+                }
+            );
 
         });
     </script>
@@ -172,7 +207,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     if($_SESSION['isAdmin'])
     {
         echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
-        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\" style=\"margin-left:5px;\">Edit Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" style=\"margin-left:5px;\" id='EditAccount'>Edit Account</button>";
         echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"deleteAccount\">Delete Account</button>";
     }
 
@@ -223,6 +258,62 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                             <span class="input-group-text">Description</span>
                         </div>
                         <textarea class="form-control" aria-label="With textarea" id="account_description" required></textarea>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!-- Add Account Modal -->
+<div class="modal fade bg-dark" id="EditAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addAccountModalLabel">Add New Account</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form method="post" id="account_account_form" class="was-validated">
+                <div class="modal-body">
+                    <!-- Account Name -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="basic-addon1">Account Name</span>
+                        </div>
+                        <input type="text" class="form-control" placeholder="Account Name" aria-label="accountName" aria-describedby="basic-addon1" id="editAccountName" required>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <!-- Account Category -->
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">Account Category</label>
+                        </div>
+                        <select class="custom-select" id="editCategoryOption" required>
+                            <option value="" selected>Choose...</option>
+                            <option value="1">Assets</option>
+                            <option value="2">Liability</option>
+                            <option value="3">Equity</option>
+                            <option value="4">Revenue</option>
+                            <option value="5">Expenses</option>
+                        </select>
+                        <div class="valid-feedback"></div>
+                        <div class="invalid-feedback"></div>
+                    </div>
+                    <!-- Account Description -->
+                    <div class="input-group">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Description</span>
+                        </div>
+                        <textarea class="form-control" aria-label="With textarea" id="editAccountDescription" required></textarea>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback"></div>
                     </div>
