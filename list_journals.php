@@ -35,9 +35,8 @@ if ($_SESSION['isAdmin'] = true) {
         <div class="p-2">
             <h1 style="text-align: left; font-size: 24px">List of General Journal Entries</h1>
         </div>
-    </div>
-    <div class="p-2">
-        <div class="input-group mb-3">
+
+        <div class="p-2">
             <a class="btn btn-primary" href="#" role="button">New journal entry</a>
         </div>
     </div>
