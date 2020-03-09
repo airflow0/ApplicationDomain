@@ -9,7 +9,7 @@ if(!$_SESSION['loggedin'])
 $f_display = $l_display = $d_display = $a_display =  $picture = "";
 $clientID = $_SESSION['userid'];
 
-$stmt = $pdo->prepare('SELECT firstname, lastname, dateofbirth, address,email, picture_directory FROM account WHERE id=:id');
+$stmt = $pdo->prepare('SELECT firstname, lastname, dateofbirth, address, picture_directory FROM account WHERE id=:id');
 $stmt->bindValue(":id", $clientID);
 $stmt->execute();
 $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -19,54 +19,58 @@ $l_display = $userinfo['lastname'];
 $d_display = $userinfo['dateofbirth'];
 $a_display = $userinfo['address'];
 $picture = $userinfo['picture_directory'];
-$email = $userinfo['email'];
 
 
 ?>
 
 <html>
+<!DOCTYPE html>
+<html lang="en">
 <head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+
+
 </head>
 <body>
-<div class="navibar row d-inline-flex" style="margin: 0px;width: 100%;max-width: 100%;max-height: 100%;height: 10%;min-height: 10%;min-width: 100%;">
-    <div class="col d-inline-flex justify-content-center align-items-center align-content-center" style="padding: 0px;min-height: 100%;width: 100%;height: 100%;min-width: 10%;max-height: 100%;">
-        <a href="/dashboard">
-            <img src="images/logo-revised.png" style="margin-left: -30%;max-width: 96%;width: 96px;height: 100px;max-height: 100%;"/>
-        </a>
+<nav class="navbar navbar-expand-sm shadow p-3 mb-5" style="background-color:#333F50; color:white">
+    <a class="navbar-brand" href="dashboard"><img src="images/logo-revised.png" width="180" height="40" class="d-inline-block align-top"/></a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
 
-    </div>
-    <div class="col text-center d-inline-flex justify-content-center align-items-center" style="padding: 0px;min-width: 70%;">
-        <ul class="list-unstyled d-flex flex-fill justify-content-center" style="margin-top: 0px;margin-bottom: 0px;">
-            <li class="d-inline-flex flex-fill justify-content-center align-items-center">
-            <a class="d-inline-flex flex-fill justify-content-center" href="">Charts</a>
-            <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #2</a>
-            <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #3</a>
-            <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #4</a>
-            <a class="d-inline-flex flex-fill justify-content-center" href="#">Temporary Content Link #5</a>
+    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3" >
+        <ul class="navbar-nav w-100 justify-content-center">
+
+            <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
+                <a class="nav-link nav-hover-link" href="charts">Chart of Accounts</a>
+            <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
+                <a class="nav-link nav-hover-link" href="list_journals">List of Journal Entries</a>
+            </li>
+            <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
+                <a class="nav-link nav-hover-link" href="journal_entry">Add Journal Entry</a>
             </li>
         </ul>
-    </div>
-    <div class="col d-inline-flex justify-content-center align-items-center" style="padding: 0px;">
-        <div class="col d-inline-flex justify-content-center" style="padding: 0px;min-width: 10%;">
-            <div class="navibardrop dropdown">
-                <li class="dropdown d-inline-flex justify-content-center align-items-center">
-                    <img src="<?php echo $picture ?>"/>
-                    <a href="" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"> <?php echo $f_display ?>  <?php print' '.$l_display ?></a>
-                    <ul class="dropdown-menu dropdown-menu-center" role="menu">
-                        <li>
-                            <a id="dropdownlink">Email: <?php echo $email ?> </a>
-                            <a id="dropdownlink" href="logout?id=<?php echo $clientID ?>">Sign out</a>
-                        </li>
+        <ul class="nav navbar-nav justify-content-end">
 
-                    </ul>
-                </li>
-            </div>
-        </div>
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" id="navbaruser" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="<?php echo $picture ?>" class="rounded-circle z-depth2" width="50" height="50" style="margin-right: 5px" >
+                    <?php echo $f_display ?>  <?php print' '.$l_display ?>
+                </a>
+                <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
+                    <a class="dropdown-item" href="logout">Sign out</a>
+                </div>
+            </li>
+
+        </ul>
     </div>
-</div>
+</nav>
 </body>
 </html>

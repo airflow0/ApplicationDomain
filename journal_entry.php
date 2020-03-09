@@ -69,7 +69,7 @@ if ($_SESSION['isAdmin'] = true) {
 							<td>5000</td>
 							<td>Cash recieved as service payment</td>
 							<td>tjohnson</td>
-							<td><a class="btn btn-secondary btn-sm" href="#" role="button">Edit</a></td>
+							<td><button type="button" class="btn btn-secondary btn-sm" href="#">Edit</button></td>
 						</tr>
 						<tr>
 							<td>2</td>
@@ -78,7 +78,7 @@ if ($_SESSION['isAdmin'] = true) {
 							<td></td>
 							<td>Expense as wages for employees</td>
 							<td>tjohnson</td>
-							<td><a class="btn btn-secondary btn-sm" href="#" role="button">Edit</a></td>
+							<td><button type="button" class="btn btn-secondary btn-sm" href="#">Edit</button></td>
 						</tr>
 					</tbody>
 				</table>

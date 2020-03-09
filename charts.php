@@ -210,6 +210,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px\" data-toggle=\"modal\" data-target=\"#addAccountModal\" >Add Account</button>";
         echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left: 6px\" data-toggle=\"modal\" style=\"margin-left:5px;\" id='EditAccount'>Edit Account</button>";
         echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"deleteAccount\">Delete Account</button>";
+        echo "<button type=\"button\" class=\"btn btn-secondary\" style=\"margin-top:10px; margin-left:6px\" id=\"viewEntryLog\">View Entry Log</button>";
     }
 
     ?>
@@ -351,14 +352,22 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                                 <input type="email" class="form-control" id="inputTo" placeholder="Enter recipient(s)' email address" required>
                             </div>
                             <div class="col-sm-auto">
-                                <button type="button" class="btn btn-secondary btn-sm" style="padding-left: 8px">Search</button>
+                                <div class="dropdown">
+                                    <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" style="padding-left: 8px" data-toggle="dropdown">
+                                        Search
+                                    </button>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="#">tdjohnson330@gmail.com</a>
+                                        <a class="dropdown-item" href="#">jameslee123@yahoo.com</a>
+                                        <a class="dropdown-item" href="#">dannyboy2020@gmail.com</a>
+                                    </div>
                             </div>
                         </div>
                     </div>
 
                     <!-- Input for email subject-->
                     <div class="form-group">
-                        <div class="row">
+                        <div class="row" style="margin-top: 15px">
                             <div class="col-sm-auto">
                                 <label for="inputSubject">Subject</label>
                             </div>
