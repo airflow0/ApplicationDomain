@@ -277,7 +277,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
-<!-- Add Account Modal -->
+<!-- Edit Account Modal -->
 <div class="modal fade bg-dark" id="EditAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
@@ -345,7 +345,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 </button>
             </div>
             <div class="modal-body bg-light">
-                <form>
+                <form class="was-validated">
                     <!-- Input for email recipient(s)-->
                     <div class="form-group">
                         <div class="row">
@@ -354,6 +354,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                             </div>
                             <div class="col-lg">
                                 <input type="email" class="form-control" id="inputTo" placeholder="Enter recipient(s)' email address" required>
+                                <div class="valid-feedback"></div>
+                                <div class="invalid-feedback"></div>
                             </div>
                             <div class="col-sm-auto">
                                 <div class="dropdown">
