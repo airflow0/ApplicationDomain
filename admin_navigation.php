@@ -27,25 +27,29 @@ $picture = $userinfo['picture_directory'];
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" href="css/style.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 
+
 </head>
 <body>
-<nav class="navbar navbar-expand-sm navbar-dark" style="margin-bottom: 30px; background-color: #333F50">
+<nav class="navbar navbar-expand-sm navbar-dark" style="margin-bottom: 30px; background-color: transparent">
     <a class="navbar-brand" href="admin_cp"><img src="images/logo-revised.png" width="180" height="40" class="d-inline-block align-top"/></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
 
-    <div class="navbar-collapse  collapse w-100" id="collapsingNavbar3">
-        <ul class="navbar-nav w-100 justify-content-center" >
+    <div class="navbar-collapse collapse w-100" id="collapsingNavbar3" >
+        <ul class="navbar-nav w-100 justify-content-center">
 
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link" href="charts">Chart of Accounts</a>
+            <li class="nav-item" style="margin-left: 30px; margin-right: 30px; ">
+                <a class="nav-link" href="charts">Charts of Accounts</a>
             </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
                 <a class="nav-link" href="#">List of Journal Entries</a>

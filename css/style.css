@@ -3,7 +3,7 @@ html
     height: 100%;
 }
 body {
-    background-image: linear-gradient(to bottom, #5f6461, #5b625f, #57605d, #535f5b, #4f5d5a, #4b5b59, #475958, #435758, #3f5558, #3b5358, #385158, #354f58);
+    background-image: linear-gradient(to right bottom, #404040, #48484a, #4f5054, #55585e, #5b6168, #606971, #647179, #697a81, #6e848a, #748d92, #799799, #80a1a0);
     font-family: sans-serif;
     margin: 0;
     padding: 0;
@@ -270,17 +270,35 @@ input[type="checkbox"] {
 }
 .profilecontainer
 {
-    background: rgb(255, 255, 255);
-    border-radius: 10px;
-    -webkit-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
-    -moz-box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
-    box-shadow: 0px 0px 30px 4px rgba(0,0,0,0.51);
+    background: #414141;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.30);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.30);
+    box-shadow: 0px 0px 1px 1px rgba(0,0,0,0.30);
     padding-bottom: 20%;
     height: 300px;
     text-align: center;
     width: 200px;
+    margin-left: 60px;
+    margin-top: 60px;
 
 }
+.profilecontainer:hover
+{
+    background: #414141;
+    border-radius: 3px;
+    -webkit-box-shadow: 0px 0px 1px 1px rgba(0,255,255,0.30);
+    -moz-box-shadow: 0px 0px 1px 1px rgba(0,255,255,0.30);
+    box-shadow: 0px 0px 4px 1px rgba(0,255,255,0.30);
+    padding-bottom: 20%;
+    height: 300px;
+    text-align: center;
+    width: 200px;
+    margin-left: 60px;
+    margin-top: 60px;
+
+}
+
 .profilepic
 {
     margin-left: auto;
@@ -316,7 +334,7 @@ input[type="checkbox"] {
 }
 .profile_info_name
 {
-    color:black;
+    color:white;
     font-size: 14px;
     font-family: sans-serif;
 }
