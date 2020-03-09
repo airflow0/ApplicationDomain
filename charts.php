@@ -116,10 +116,11 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 
         });
     </script>
+    <title>CountOnUs - Chart of Accounts</title>
 </head>
 
 <body>
-<div style="margin-top: -30px; padding: 20px; color: #FFFFFF">
+<div class="body-format" style="padding: 20px; color: #FFFFFF">
     <div class="d-flex justify-content-between">
         <div class="p-2">
             <h1 style="text-align: left; font-size: 26px; margin-bottom:-5px">Chart of Accounts</h1>
@@ -333,7 +334,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="modalTitle">Compose Email Message</h5>
+                <h5 class="modal-title" id="modalTitle">Compose email message</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
