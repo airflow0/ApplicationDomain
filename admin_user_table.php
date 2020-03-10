@@ -8,38 +8,30 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="css/style.css">
+    <!-- Datatables -->
+    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" language="javascript" src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 </head>
 <body>
-
-<div class="container-fluid">
-    <div class="d-flex flex-column" style="margin-left: 10px; margin-right:10px; ">
-        <div class="search">
-            <input class="form-control" type="text" placeholder="Search" aria-label="Search" id="search_input" onkeyup="searchTable()">
-            <div class="admin_user_radio btn-group btn-group-toggle" data-toggle="buttons" style="width:50%;" >
-                <label class="btn btn-secondary active">
-                    <input type="radio" name="radio_choice" value="radio_id" id="option1"  autocomplete="off" checked> ID
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="radio_choice" value="radio_firstname" id="option2" autocomplete="off"> First Name
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="radio_choice" value="radio_lastname" id="option2" autocomplete="off"> Last Name
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="radio_choice" value="radio_email" id="option3" autocomplete="off"> Email
-                </label>
-                <label class="btn btn-secondary">
-                    <input type="radio" name="radio_choice" value="radio_active" id="option4" autocomplete="off"> Active
-                </label>
-            </div>
-        </div>
-
+<div class="body-format" style="padding: 20px; color: #FFFFFF">
+    <div class="d-flex justify-content-start">
         <div class="p-2">
-            <table class="table table-dark" id="user_table">
+            <h1 style="text-align: left; font-size: 26px; margin-bottom:-5px">Manage Users</h1>
+        </div>
+    </div>
+
+    <div class="border border-secondary rounded bg-dark">
+        <div style="padding: 10px">
+            <table id="user_table" class="table hover table-bordered table-dark">
                 <thead>
                 <tr>
-                    <th scope="col">ID</th>
+                    <th scope="col">User ID</th>
                     <th scope="col">First Name</th>
                     <th scope="col">Last Name</th>
                     <th scope="col">Email</th>
@@ -48,69 +40,69 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
                     <th scope="col">Admin?</th>
                 </tr>
                 </thead>
-
                 <tbody>
                 <?php while ($row = $stmt->fetch()): ?>
-                <tr>
-                    <td> <a href="admin_user_update?id=<?php echo $row['id']?>"><?php echo htmlspecialchars($row['id']) ?></a></td>
-                    <td><?php echo htmlspecialchars($row['firstname']) ?></td>
-                    <td><?php echo htmlspecialchars($row['lastname']); ?></td>
-                    <td><a href="mailto:<?php echo htmlspecialchars($row['email']); ?>"><?php echo htmlspecialchars($row['email']); ?></a></td>
-                    <td>
-                        <?php
-                        $valid = "valid";
-                        if($row['isActive'] == 0)
-                        {
-                            $valid = "invalid";
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="switchtovalid" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
-                        else
-                        {
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="switchtoinvalid" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
+                    <tr>
+                        <td> <a href="admin_user_update?id=<?php echo $row['id']?>"><?php echo htmlspecialchars($row['id']) ?></a></td>
+                        <td><?php echo htmlspecialchars($row['firstname']) ?></td>
+                        <td><?php echo htmlspecialchars($row['lastname']); ?></td>
+                        <td><a href="mailto:<?php echo htmlspecialchars($row['email']); ?>"><?php echo htmlspecialchars($row['email']); ?></a></td>
+                        <td>
+                            <?php
+                            $valid = "valid";
+                            if($row['isActive'] == 0)
+                            {
+                                $valid = "invalid";
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="switchtovalid" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
+                            else
+                            {
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="switchtoinvalid" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
 
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        $valid = "valid";
-                        if($row['isManager'] == 0)
-                        {
-                            $valid = "invalid";
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="promoteToManager" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
-                        else
-                        {
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="unpromoteToManager" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            $valid = "valid";
+                            if($row['isManager'] == 0)
+                            {
+                                $valid = "invalid";
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="promoteToManager" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
+                            else
+                            {
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="unpromoteToManager" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
 
-                        ?>
-                    </td>
-                    <td>
-                        <?php
-                        $valid = "valid";
-                        if($row['isAdmin'] == 0)
-                        {
-                            $valid = "invalid";
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="promoteToAdmin" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
-                        else
-                        {
-                            print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="unpromoteToAdmin" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
-                        }
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            $valid = "valid";
+                            if($row['isAdmin'] == 0)
+                            {
+                                $valid = "invalid";
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="promoteToAdmin" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
+                            else
+                            {
+                                print '<form method="post" action="admin_user_table_update?id='.$row['id'].'"><input type="submit" name="unpromoteToAdmin" class="btn btn-secondary btn-sm" value='.$valid.'></a> </form>';
+                            }
 
-                        ?>
-                    </td>
-                </tr>
+                            ?>
+                        </td>
+                    </tr>
                 <?php endwhile; ?>
+
+
                 </tbody>
-
-            </table></div>
-
-
-        <p id="demo"></p>
+            </table>
+        </div>
     </div>
-</div>
+    <div>
+
+
 <script>
     function searchTable()
     {
