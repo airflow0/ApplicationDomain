@@ -7,9 +7,10 @@ if(isset($_POST['account_name']))
 
     if($category == 'Asset')
     {
-        $stmt = $pdo->prepare('DELETE from assets,accountnames WHERE accName=:accName');
+        $stmt = $pdo->prepare('DELETE from assets WHERE accName=:accName');
         $stmt->bindValue(':accName', $accountname);
         $stmt->execute();
+
         echo "Account securely deleted";
     }
     else if( $category == 'Liability')
@@ -40,5 +41,8 @@ if(isset($_POST['account_name']))
         $stmt->execute();
         echo "Account securely deleted";
     }
+    $stmt = $pdo->prepare('DELETE from accountnames WHERE accName=:accName');
+    $stmt->bindValue(':accName', $accountname);
+    $stmt->execute();
 }
 ?>

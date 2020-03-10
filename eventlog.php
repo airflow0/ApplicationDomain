@@ -1,11 +1,16 @@
 <?php
 
 require('database.php');
-if ($_SESSION['isAdmin'] = true) {
-    require('admin_navigation.php');
-} else {
-    require('navigation.php');
-}
+require('admin_navigation.php');
+
+$accountName = $_GET['accountname'];
+$accountID = $_GET['accountid'];
+
+$stmt = $pdo->prepare("SELECT eventID,modifiedBy,dateModified,time,details from eventlog where accID=:accID");
+$stmt->bindValue(":accID", $accountID);
+$stmt->execute();
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+
 ?>
 
 <!doctype html>
@@ -34,7 +39,7 @@ if ($_SESSION['isAdmin'] = true) {
   					<div class="input-group-prepend">
     					<span class="input-group-text" id="account-name">Account</span>
   					</div>
-  					<input type="text" class="form-control" placeholder="Account name" aria-label="Account name" aria-describedby="account-name">
+                    <input type="text" class="form-control" placeholder="<?php echo $accountID ?>" aria-label="Account name" aria-describedby="account-name" disabled>
 				</div>
 			</span></h1>
     </div>
@@ -52,21 +57,17 @@ if ($_SESSION['isAdmin'] = true) {
                 </tr>
                 </thead>
                 <tbody>
+                <?php
+                while($row = $stmt->fetch()):
+                ?>
                 <tr>
-                    <td>1</td>
-                    <td>tjohnson</td>
-                    <td>03/02/2020</td>
-                    <td>4:54 PM</td>
-                    <td>Changed account type</td>
+                    <td><?php echo htmlspecialchars($row['eventID']) ?></td>
+                    <td><?php echo htmlspecialchars($row['modifiedBy']) ?></td>
+                    <td><?php echo htmlspecialchars($row['dateModified']) ?></td>
+                    <td><?php echo htmlspecialchars($row['time']) ?></td>
+                    <td><?php echo htmlspecialchars($row['details']) ?></td>
                 </tr>
-                <tr>
-                    <td>2</td>
-                    <td>jameslee</td>
-                    <td>03/03/2020</td>
-                    <td>4:00 AM</td>
-                    <td>Changed account name</td>
-                </tr>
-
+                <?php endwhile; ?>
                 </tbody>
             </table>
         </div>
@@ -80,5 +81,4 @@ if ($_SESSION['isAdmin'] = true) {
 </script>
 
 </body>
-
 </html>

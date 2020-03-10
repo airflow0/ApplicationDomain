@@ -40,7 +40,19 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                     $(this).addClass('selected');
                 }
             });
+            $('#viewEntryLog').click( function(){
+                if(table.row('.selected').any())
+                {
+                    var data = table.row('.selected').data();
+                    var url = 'eventlog?accountname=' +data[0] +'&accountid='+data[1];
+                    $(location).attr('href',url);
 
+                }
+                else
+                {
+                    alert('You must select a row from the table!');
+                }
+            });
             $('#account_table tbody').on('dblclick', 'tr', function () {
                 var data = table.row( this ).data();
                 var url = 'accountview?accountname=' +data[0] +'&accountid='+data[1];
@@ -81,26 +93,29 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                         var data = table.row('.selected').data();
                         $('#EditAccountModal').modal('show');
                         $('#EditAccountModal #editAccountName').val(data[0]);
+                        var category = 0;
                         if(data[3] == 'Asset')
                         {
-
+                            category = 1;
                         }
-                        else if(data[3] == 'Liabilities')
+                        else if(data[3] == 'Liability')
                         {
-
+                            category = 2;
                         }
-                        else if(data[3] == 'Liabilities')
+                        else if(data[3] == 'Equity')
                         {
-
+                            category = 3;
                         }
-                        else if(data[3] == 'Liabilities')
+                        else if(data[3] == 'Revenue')
                         {
-
+                            category = 4;
                         }
-                        else if(data[3] == 'Liabilities')
+                        else if(data[3] == 'Expenses')
                         {
-
+                            category = 5;
                         }
+                        $('#EditAccountModal #editCategoryOption').val(category);
+                        $('#EditAccountModal #editAccountDescription').val(data[2]);
                     }
                     else
                     {
@@ -108,6 +123,36 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                     }
                 }
             );
+            $('#editAccountButton').click( function ()
+            {
+                var accountname = $('#editAccountName').val();
+                var category = $('#editCategoryOption').val();
+                var description = $('#editAccountDescription').val();
+                var data = table.row('.selected').data();
+                var accountId = data[1];
+                $.ajax ({
+                    url: "post/updateAccountPost",
+                    method: "POST",
+                    data: {accountname:accountname, category:category, description:description, accountId:accountId},
+                    success:function(data)
+                    {
+                        alert(data);
+                        if(data == 'no')
+                        {
+                            alert('Something went wrong!');
+                        }
+                        else if(data == 'existerror')
+                        {
+                            alert('The account name already exists in the Database, please try with a different account name!');
+                        }
+                        else
+                        {
+                            $('#EditAccountModal').hide();
+                            location.reload();
+                        }
+                    }
+                });
+            });
 
         });
     </script>
@@ -322,7 +367,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary" id="addAccountButton">Save changes</button>
+                    <button type="button" class="btn btn-primary" id="editAccountButton">Save changes</button>
                 </div>
             </form>
         </div>
@@ -407,6 +452,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 
 
 <script type="text/javascript">
+
     $('#addAccountButton').click( function ()
     {
         var accountname = $('#accountName').val();
