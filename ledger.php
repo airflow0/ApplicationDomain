@@ -20,7 +20,7 @@ while($debit_row = $debit->fetch()):
     $money = str_replace(',', '', $money);
     array_push($debitarray, $money);
 endwhile;
-print_r($debitarray);
+
 
 $creditarray = [];
 $credit = $pdo->prepare("SELECT credit FROM journal_data WHERE accID=:accID");
@@ -32,7 +32,13 @@ while($credit_row = $credit->fetch()):
     $money = str_replace(',', '', $money);
     array_push($creditarray, $money);
 endwhile;
-print_r($creditarray);
+
+$balance = 0;
+$balance_array = [];
+foreach($debitarray as $debit)
+{
+    echo $debit;
+}
 ?>
 
 <!doctype html>
