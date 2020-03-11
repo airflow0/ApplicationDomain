@@ -78,7 +78,6 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
     $(document).ready( function () {
         $('#ledger-table-view').DataTable();
     } );
-</script>
 
 </body>
 </html>
