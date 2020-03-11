@@ -52,165 +52,85 @@ if(isset($_POST['addjournal']))
             <thead>
             <tr>
 
-                <th scope="col">Description</th>
-                <th scope="col">Currency</th>
-                <th scope="col">Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Sales</td>
-                <td>$</td>
-                <td>10,000</td>
-            </tr>
-            </tbody>
-        </table>
+<body>
+<div class="bd-highlight body-format" style="padding: 20px; color: #FFFFFF">
+    <div style="padding-bottom: 10px">
+        <h1 style="text-align: left; font-size: 26px; padding-bottom: 15px">Income Statement<span style="float: right">
+				<div class="input-group mb-3">
+  					<div class="input-group-prepend">
+    					<span class="input-group-text" id="month-year">Month/Year</span>
+  					</div>
+  					<input type="text" class="form-control" placeholder="MM/YYYY" aria-label="Month/year" aria-describedby="month-year">
+				</div>
+			</span></h1>
     </div>
-</div>
 
-<h3 class="p-2 flex-fill bd-highlight" style="text-align: Left; color: white; font-family: sans-serif; font-weight: bold; margin-left:60px;"> Expenses</h3>
-<div class="d-flex flex-column" style="margin-left: 50px; margin-right: 50px;">
-    <div class="p-2">
-        <table id="account_table" class="table table-dark">
-            <thead>
-            <tr>
+    <div class="border border-secondary rounded bg-white">
+        <div style="padding: 10px">
+            <table id="rev-table" class="table table-striped table-bordered table-dark" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th style="width:10%" scope="row">REVENUES:</th>
+                    <td style="width:65%"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td scope="row">Revenue #1</td>
+                    <td>100.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td scope="row">Revenue #2</td>
+                    <td>200.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th scope="row">Total Revenues</th>
+                    <td>300.00</td>
+                </tr>
 
-                <th scope="col">Cost of Goods Sold</th>
-                <th scope="col">Currency</th>
-                <th scope="col">Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Payable</td>
-                <td>$</td>
-                <td>10,000</td>
-            </tr>
+                </tbody>
+            </table>
 
-            </tbody>
-        </table>
+            <table id="exp-table" class="table table-striped table-bordered table-dark" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th style="width: 10%" scope="row">EXPENSES:</th>
+                    <td style="width:65%"></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td scope="row">Expense #1</td>
+                    <td>10.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td scope="row">Expense #2</td>
+                    <td>20.00</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <th scope="row">Total Expenses</th>
+                    <td>30.00</td>
+                </tr>
+
+                </tbody>
+            </table>
+
+            <table id="net-table" class="table table-striped table-bordered table-dark" style="width: 100%">
+                <tbody>
+                <tr>
+                    <th  style="width: 75%" scope="row">NET INCOME:</th>
+                    <td>270.00</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
+
 </div>
-
-<h3 class="p-2 flex-fill bd-highlight" style="text-align: Left; color: white; font-family: sans-serif; font-weight: bold; margin-left:60px;"> Net Income</h3>
-<div class="d-flex flex-column" style="margin-left: 50px; margin-right: 50px;">
-    <div class="p-2">
-        <table id="account_table" class="table table-dark">
-            <thead>
-            <tr>
-
-                <th scope="col">Description</th>
-                <th scope="col">Currency</th>
-                <th scope="col">Amount</th>
-            </tr>
-            </thead>
-            <tbody>
-            <tr>
-                <td>Total:</td>
-                <td></td>
-                <td>$0.00</td>
-            </tr>
-            </tbody>
-        </table>
-    </div>
-</div>
-
-
-<script type="text/javascript">
-    $('#subcategoryCheck').click(function () {
-        var checked = this.checked;
-        console.log(checked);
-        $('#subcategory').each(function () {
-            $(this).prop('disabled', !checked);
-        });
-    });
-    // Jquery Dependency
-
-    $("input[data-type='currency']").on({
-        keyup: function () {
-            formatCurrency($(this));
-        },
-        blur: function () {
-            formatCurrency($(this), "blur");
-        }
-    });
-
-
-    function formatNumber(n) {
-        // format number 1000000 to 1,234,567
-        return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-    }
-
-
-    function formatCurrency(input, blur) {
-        // appends $ to value, validates decimal side
-        // and puts cursor back in right position.
-
-        // get input value
-        var input_val = input.val();
-
-        // don't validate empty input
-        if (input_val === "") {
-            return;
-        }
-
-        // original length
-        var original_len = input_val.length;
-
-        // initial caret position
-        var caret_pos = input.prop("selectionStart");
-
-        // check for decimal
-        if (input_val.indexOf(".") >= 0) {
-
-            // get position of first decimal
-            // this prevents multiple decimals from
-            // being entered
-            var decimal_pos = input_val.indexOf(".");
-
-            // split number by decimal point
-            var left_side = input_val.substring(0, decimal_pos);
-            var right_side = input_val.substring(decimal_pos);
-
-            // add commas to left side of number
-            left_side = formatNumber(left_side);
-
-            // validate right side
-            right_side = formatNumber(right_side);
-
-            // On blur make sure 2 numbers after decimal
-            if (blur === "blur") {
-                right_side += "00";
-            }
-
-            // Limit decimal to only 2 digits
-            right_side = right_side.substring(0, 2);
-
-            // join number by .
-            input_val = left_side + "." + right_side;
-
-        } else {
-            // no decimal entered
-            // add commas to number
-            // remove all non-digits
-            input_val = formatNumber(input_val);
-            input_val = input_val;
-
-            // final formatting
-            if (blur === "blur") {
-                input_val += ".00";
-            }
-        }
-
-        // send updated string to input
-        input.val(input_val);
-
-        // put caret back in the right position
-        var updated_len = input_val.length;
-        caret_pos = updated_len - original_len + caret_pos;
-        input[0].setSelectionRange(caret_pos, caret_pos);
-    }
-</script>
 
 </body>
 
