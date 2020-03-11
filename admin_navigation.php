@@ -116,7 +116,7 @@ $picture = $userinfo['picture_directory'];
                         <thead></thead>
                         <tbody>
                             <tr>
-                                <td class="finan_item">Balance Sheet</td>
+                                <td class="finan_item"><a href="/balancesheet">Balance Sheet</a></td>
                             </tr>
                             <tr>
                                 <td class="finan_item">Income Statement</td>
