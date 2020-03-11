@@ -13,8 +13,10 @@ $options = array (
 $pdo = new PDO(
     "mysql:host=" .HOST. "; dbname=".DB, DB_USER, DB_PASSWORD, $options
 );
-
-session_start();
+if(!isset($_SESSION))
+{
+    session_start();
+}
 $_SESSION['counter'] = 0;
 
 ?>

@@ -10,28 +10,6 @@ $journal_data = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
 $journal_data->bindValue(":accID", $accountID);
 $journal_data->execute();
 $journal_data->setFetchMode(PDO::FETCH_ASSOC);
-$debitarray = [];
-$debit = $pdo->prepare("SELECT debit FROM journal_data WHERE accID=:accID");
-$debit->bindValue(":accID", $accountID);
-$debit->execute();
-$debit->setFetchMode(PDO::FETCH_ASSOC);
-while($debit_row = $debit->fetch()):
-    $money = preg_replace('/[^\d,\.]/', '', $debit_row['debit']);
-    $money = str_replace(',', '', $money);
-    array_push($debitarray, $money);
-endwhile;
-
-
-$creditarray = [];
-$credit = $pdo->prepare("SELECT credit FROM journal_data WHERE accID=:accID");
-$credit->bindValue(":accID", $accountID);
-$credit->execute();
-$credit->setFetchMode(PDO::FETCH_ASSOC);
-while($credit_row = $credit->fetch()):
-    $money = preg_replace('/[^\d,\.]/', '', $credit_row['credit']);
-    $money = str_replace(',', '', $money);
-    array_push($creditarray, $money);
-endwhile;
 
 $balance = 0;
 $count = 0;
@@ -83,89 +61,6 @@ while($transaction = $balance_troll->fetch())
 
         } );
 
-        $("input[data-type='currency']").on({
-            keyup: function () {
-                formatCurrency($(this));
-            },
-            blur: function () {
-                formatCurrency($(this), "blur");
-            }
-        });
-
-        function formatNumber(n) {
-            // format number 1000000 to 1,234,567
-            return n.replace(/\D/g, "").replace(/\B(?=(\d{3})+(?!\d))/g, ",")
-        }
-
-
-        function formatCurrency(input, blur) {
-            // appends $ to value, validates decimal side
-            // and puts cursor back in right position.
-
-            // get input value
-            var input_val = input.val();
-
-            // don't validate empty input
-            if (input_val === "") {
-                return;
-            }
-
-            // original length
-            var original_len = input_val.length;
-
-            // initial caret position
-            var caret_pos = input.prop("selectionStart");
-
-            // check for decimal
-            if (input_val.indexOf(".") >= 0) {
-
-                // get position of first decimal
-                // this prevents multiple decimals from
-                // being entered
-                var decimal_pos = input_val.indexOf(".");
-
-                // split number by decimal point
-                var left_side = input_val.substring(0, decimal_pos);
-                var right_side = input_val.substring(decimal_pos);
-
-                // add commas to left side of number
-                left_side = formatNumber(left_side);
-
-                // validate right side
-                right_side = formatNumber(right_side);
-
-                // On blur make sure 2 numbers after decimal
-                if (blur === "blur") {
-                    right_side += "00";
-                }
-
-                // Limit decimal to only 2 digits
-                right_side = right_side.substring(0, 2);
-
-                // join number by .
-                input_val = "$" + left_side + "." + right_side;
-
-            } else {
-                // no decimal entered
-                // add commas to number
-                // remove all non-digits
-                input_val = formatNumber(input_val);
-                input_val = "$" + input_val;
-
-                // final formatting
-                if (blur === "blur") {
-                    input_val += ".00";
-                }
-            }
-
-            // send updated string to input
-            input.val(input_val);
-
-            // put caret back in the right position
-            var updated_len = input_val.length;
-            caret_pos = updated_len - original_len + caret_pos;
-            input[0].setSelectionRange(caret_pos, caret_pos);
-        }
     </script>
 </head>
 
@@ -217,9 +112,8 @@ while($transaction = $balance_troll->fetch())
 							<td><?php echo htmlspecialchars($rowAssets['credit']); ?></td>
 							<td>
                                 <?php
-                                $fmt = new NumberFormatter( 'de_DE', NumberFormatter::CURRENCY );
-                                echo $fmt->formatCurrency(1234567.891234567890000, "EUR")."\n";
-                                echo $balance_array[$i];
+                                $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                                echo $fmt->formatCurrency($balance_array[$i], "USD")."\n";
                                 $i++;
 							?></td>
 							<td><a class="btn btn-secondary btn-sm" href="/edit_journal?referenceID=<?php echo $rowAssets['referenceID']; ?>" role="button">View</a></td>

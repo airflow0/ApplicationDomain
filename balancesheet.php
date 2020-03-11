@@ -7,31 +7,47 @@ if ($_SESSION['isAdmin'] = true) {
     require('navigation.php');
 }
 
-$accountname = $_GET['accountname'];
-$accountid = $_GET['accountid'];
+$accIDS = $pdo->prepare("SELECT accID FROM assets");
+$accIDS->execute();
+$accIDS->setFetchMode(PDO::FETCH_ASSOC);
 
-$date = $description = $debit = $credit = $affected = $explanation = "";
-
-
-if(isset($_POST['addjournal']))
-{;
-    $date = $_POST['date'];
-    $description = $_POST['description'];
-    $debit = str_replace(',', '', $_POST['debit']);
-    $credit = str_replace(',', '', $_POST['credit']);
-    $affected = $_POST['affected'];
-    $explanation = $_POST['explanation'];
-
-    $stmt = $pdo->prepare("INSERT into journal (accNumber, date, description, debit, credit, affected, explanation) VALUES (:accNumber, :date, :description, :debit, :credit, :affected, :explanation)");
-    $stmt->bindValue(":accNumber", $accountid);
-    $stmt->bindValue(":date", $date);
-    $stmt->bindValue(":description", $description);
-    $stmt->bindValue(":debit", $debit);
-    $stmt->bindValue(":credit", $credit);
-    $stmt->bindValue(":affected", $affected);
-    $stmt->bindValue(":explanation", $explanation);
-    $stmt->execute();
+$count = 0;
+$balance_array = [];
+$balance_total = 0;
+$balance_total_array = [];
+while($accounts = $accIDS->fetch())
+{
+    $balance = 0;
+    $balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $balance_troll->bindValue(":accID", $accounts['accID']);
+    $balance_troll->execute();
+    $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $balance_troll->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        if($debit_money != null)
+        {
+            $balance = $balance + $debit_money;
+            $balance_total = $balance + $debit_money;
+        }
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($credit_money != null)
+        {
+            $balance = $balance - $credit_money;
+            $balance_total = $balance - $credit_money;
+        }
+        array_push($balance_total_array, $balance_total);
+    }
+    array_push($balance_array, $balance);
 }
+print_r($balance_array);
+print_r($balance_total)
+
+
+
+
 ?>
 
 <!doctype html>
