@@ -473,6 +473,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 {
                     $('#loginModal').hide();
                     location.reload();
+
                 }
             }
         });

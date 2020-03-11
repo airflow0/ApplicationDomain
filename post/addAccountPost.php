@@ -25,8 +25,16 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':editBy', $clientID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName) values (:accName)");
+            $stmt = $pdo->prepare("SELECT accID FROM assets WHERE accName=:accName");
+            $stmt->bindValue(":accName", $accountName);
+            $stmt->execute();
+            $acc = $stmt->fetch(PDO::FETCH_ASSOC);
+            $accID = $acc['accID'];
+
+
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
             $stmt->bindValue(':accName', $accountName);
+            $stmt->bindValue(':accID', $accID);
             $stmt->execute();
             echo 'Account has been successfully added!';
 
@@ -41,8 +49,16 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':editBy', $clientID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName) values (:accName)");
+            $stmt = $pdo->prepare("SELECT accID FROM liability WHERE accName=:accName");
+            $stmt->bindValue(":accName", $accountName);
+            $stmt->execute();
+            $acc = $stmt->fetch(PDO::FETCH_ASSOC);
+            $accID = $acc['accID'];
+
+
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
             $stmt->bindValue(':accName', $accountName);
+            $stmt->bindValue(':accID', $accID);
             $stmt->execute();
             echo 'Account has been successfully added!';
 
@@ -58,8 +74,16 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':editBy', $clientID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName) values (:accName)");
+            $stmt = $pdo->prepare("SELECT accID FROM equity WHERE accName=:accName");
+            $stmt->bindValue(":accName", $accountName);
+            $stmt->execute();
+            $acc = $stmt->fetch(PDO::FETCH_ASSOC);
+            $accID = $acc['accID'];
+
+
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
             $stmt->bindValue(':accName', $accountName);
+            $stmt->bindValue(':accID', $accID);
             $stmt->execute();
             echo 'Account has been successfully added!';
         }
@@ -73,8 +97,16 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':editBy', $clientID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName) values (:accName)");
+            $stmt = $pdo->prepare("SELECT accID FROM revenue WHERE accName=:accName");
+            $stmt->bindValue(":accName", $accountName);
+            $stmt->execute();
+            $acc = $stmt->fetch(PDO::FETCH_ASSOC);
+            $accID = $acc['accID'];
+
+
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
             $stmt->bindValue(':accName', $accountName);
+            $stmt->bindValue(':accID', $accID);
             $stmt->execute();
             echo 'Account has been successfully added!';
         }
@@ -88,8 +120,16 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':editBy', $clientID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName) values (:accName)");
+            $stmt = $pdo->prepare("SELECT accID FROM expenses WHERE accName=:accName");
+            $stmt->bindValue(":accName", $accountName);
+            $stmt->execute();
+            $acc = $stmt->fetch(PDO::FETCH_ASSOC);
+            $accID = $acc['accID'];
+
+
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
             $stmt->bindValue(':accName', $accountName);
+            $stmt->bindValue(':accID', $accID);
             $stmt->execute();
             echo 'Account has been successfully added!';
         }

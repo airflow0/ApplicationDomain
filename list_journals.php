@@ -2,6 +2,10 @@
 
 require('database.php');
 require('admin_navigation.php');
+
+$journal_data = $pdo->query('SELECT referenceID, createdBy, dateCreated, status from journal');
+$journal_data->execute;
+$journal_data->setFetchMode(PDO::FETCH_ASSOC);
 ?>
 
 <!doctype html>
@@ -14,15 +18,82 @@ require('admin_navigation.php');
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
     <!-- Datatables -->
-    <script type="text/javascript" language="javascript" src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript" language="javascript"
-            src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
-    <script type="text/javascript" language="javascript"
-            src="https://cdn.datatables.net/1.10.20/js/dataTables.bootstrap4.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 
     <title>CountOnUs - List of General Journal Entries</title>
+
+    <script type="text/javascript">
+        $(document).ready(function () {
+            var table = $('#list-journal-table-view').DataTable();
+            $('#list-journal-table-view tbody').on('click', 'tr', function () {
+                if ($(this).hasClass('selected')) {
+                    $(this).removeClass('selected');
+                } else {
+                    table.$('tr.selected').removeClass('selected');
+                    $(this).addClass('selected');
+                }
+            });
+            $('#list-journal-table-view tbody').on('dblclick', 'tr', function () {
+                var data = table.row( this ).data();
+                var url = 'edit_journal?referenceID=' +data[0];
+                $(location).attr('href',url);
+            } );
+            $('#list-journal-table-view tbody').on( 'click', 'button', function () {
+                var data = table.row( $(this).parents('tr') ).data();
+                var referenceID = data[0];
+                $('#modalStatus').modal('show');
+                if(data[4] == "Rejected")
+                {
+                    $('#modalStatus #select-status').val(-1);
+                } else if(data[4] == "Pending")
+                {
+                    $('#modalStatus #select-status').val(0);
+                }
+                else if(data[4] == "Approved")
+                {
+                    $('#modalStatus #select-status').val(1);
+                }
+                var type = "getMemo";
+                $.ajax(
+                    {
+                        url: 'post/list_journals_post',
+                        method: 'post',
+                        data :{ type: type, referenceID },
+                        success(data)
+                        {
+                            $('#modalStatus #reason-status').val(data);
+
+                        }
+                    }
+                );
+
+                $('#update_status').click(function(){
+                    type = "update";
+                    var status = $('#modalStatus #select-status').children("option:selected").val();
+                    var memo = $('#modalStatus #reason-status').val();
+                    $.ajax(
+                        {
+                            url: 'post/list_journals_post',
+                            method: 'post',
+                            data :{ type: type, referenceID:referenceID, memo: memo, status: status },
+                            success(data)
+                            {
+                                $('#modalStatus').hide();
+                                location.reload();
+                            }
+                        }
+                    );
+                });
+            } );
+
+        });
+    </script>
 </head>
 
 <body>
@@ -44,51 +115,54 @@ require('admin_navigation.php');
                 <tr>
                     <th>JOURNAL #</th>
                     <th>DATE</th>
-                    <th>ACCOUNT</th>
                     <th>NAME</th>
                     <th>STATUS</th>
                     <th></th>
                 </tr>
                 </thead>
+
                 <tbody>
-                <tr>
-                    <td>2</td>
-                    <td>03/01/2020</td>
-                    <td>Payroll</td>
-                    <td>tjohnson</td>
-                    <td>Pending</td>
-                    <td>
-                        <div class="d-flex">
-                            <div class="p-2">
-                                <a class="btn btn-secondary" href="#" role="button">View</a>
-                            </div>
-                            <div class="p-2">
-                                <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                        data-target="#modalStatus">Update status
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>03/03/2020</td>
-                    <td>Payroll</td>
-                    <td>tjohnson</td>
-                    <td>Pending</td>
-                    <td>
-                        <div class="d-flex">
-                            <div class="p-2">
-                                <a class="btn btn-secondary" href="#" role="button">View</a>
-                            </div>
-                            <div class="p-2">
-                                <button type="button" class="btn btn-secondary" data-toggle="modal"
-                                        data-target="#modalStatus">Update status
-                                </button>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
+                <?php
+                while ($rowAssets = $journal_data->fetch()): ?>
+                    <tr>
+                        <td><?php echo htmlspecialchars($rowAssets['referenceID']); ?></td>
+                        <td><?php echo htmlspecialchars($rowAssets['dateCreated']); ?></td>
+
+                        <td><?php
+                            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account WHERE id=:id');
+                            $stmt->bindValue(":id", $rowAssets['createdBy']);
+                            $stmt->execute();
+                            $userinfo = $stmt->fetch(PDO::FETCH_ASSOC);
+                            $f_display = $userinfo['firstname'];
+                            $l_display = $userinfo['lastname'];
+
+                            $clientName = $f_display." ".$l_display;
+
+                            echo htmlspecialchars($clientName); ?>
+                        </td>
+                        <td><?php
+                            $status = htmlspecialchars($rowAssets['status']);
+                            if($status == -1)
+                            {
+                                echo 'Denied';
+                            } elseif ($status == 0)
+                            {
+                                echo 'Pending';
+                            }
+                            else
+                            {
+                                echo 'Approved';
+                            }
+
+
+                            ?></td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" data-toggle="modal"
+                                    id="status">Update status
+                            </button>
+                        </td>
+                    </tr>
+                <?php  endwhile; ?>
                 </tbody>
             </table>
         </div>
@@ -111,9 +185,9 @@ require('admin_navigation.php');
                     <div class="form-group">
                         <label for="select-status">Status</label>
                         <select class="form-control" id="select-status">
-                            <option>Pending</option>
-                            <option>Approved</option>
-                            <option>Rejected</option>
+                            <option value="0">Pending</option>
+                            <option value="1">Approved</option>
+                            <option value="-1">Rejected</option>
                         </select>
                     </div>
 
@@ -124,37 +198,12 @@ require('admin_navigation.php');
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-primary">Update</button>
+                        <button type="button" class="btn btn-primary" id="update_status">Update</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#list-journal-table-view').DataTable();
-        });
-
-        $('#list-journal-table-view').dataTable({
-            "columnDefs": [
-                {"width": "15%", "targets": 5}
-            ]
-        });
-    </script>
-
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-            crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-
 </body>
 
 </html>
