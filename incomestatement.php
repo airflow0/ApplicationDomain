@@ -34,23 +34,18 @@ if(isset($_POST['addjournal']))
 }
 ?>
 
-<html>
+<!doctype html>
+<html lang="en">
+
 <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 
+    <title>CountOnUs - Income Statement</title>
 </head>
-<body>
-<div class="d-flex bd-highlight" style="margin-top: 100px;">
-
-    <h3 class="p-2 flex-fill bd-highlight" style="text-align: center; color: white; font-family: sans-serif; font-weight: bold"> Income Statement</h3>
-</div>
-
-<h3 class="p-2 flex-fill bd-highlight" style="text-align: Left; color: white; font-family: sans-serif; font-weight: bold; margin-left:60px;"> Revenue</h3>
-<div class="d-flex flex-column" style="margin-left: 50px; margin-right: 50px;">
-    <div class="p-2">
-        <table id="account_table" class="table table-dark">
-            <thead>
-            <tr>
 
 <body>
 <div class="bd-highlight body-format" style="padding: 20px; color: #FFFFFF">
