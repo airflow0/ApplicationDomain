@@ -117,7 +117,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                     <th>DATE</th>
                     <th>NAME</th>
                     <th>STATUS</th>
-                    <th></th>
+                    <th style="width:9%"></th>
                 </tr>
                 </thead>
 
