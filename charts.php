@@ -1,23 +1,19 @@
 <?php
 require('admin_navigation.php');
 
+
 $stmt = $pdo->prepare('SELECT accName from accountnames');
 $stmt->execute();
 $accountNames = $stmt->fetchAll(\PDO::FETCH_ASSOC);
 
-
 $asset = $pdo->query('SELECT accID, accName, description, date FROM assets');
 $asset->setFetchMode(PDO::FETCH_ASSOC);
-
 $liability = $pdo->query('SELECT accID, accName, description, date FROM liability');
 $liability->setFetchMode(PDO::FETCH_ASSOC);
-
 $equity = $pdo->query('SELECT accID, accName, description, date FROM equity');
 $equity->setFetchMode(PDO::FETCH_ASSOC);
-
 $expenses = $pdo->query('SELECT accID, accName, description, date FROM expenses');
 $expenses->setFetchMode(PDO::FETCH_ASSOC);
-
 $revenue = $pdo->query('SELECT accID, accName, description, date FROM revenue');
 $revenue->setFetchMode(PDO::FETCH_ASSOC);
 
@@ -55,7 +51,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             });
             $('#account_table tbody').on('dblclick', 'tr', function () {
                 var data = table.row( this ).data();
-                var url = 'accountview?accountname=' +data[0] +'&accountid='+data[1];
+                var url = 'ledger?accountname=' +data[0] +'&accountid='+data[1];
                 $(location).attr('href',url);
             } );
 

@@ -25,6 +25,7 @@ if ($_SESSION['isAdmin'] = true) {
 	<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
 	
 	<title>CountOnUs - Chart of Accounts</title>
+
 </head>
 
 <body>

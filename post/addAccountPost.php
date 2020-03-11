@@ -2,7 +2,7 @@
 require('../database.php');
 if(isset($_POST['accountname']))
 {
-    $time = date("Y-m-d H:i:s", time()); // 3 Days
+    $time = date("Y-m-d H:i:s", time());
     $clientID = $_SESSION['userid'];
     $accountName = trim($_POST['accountname']);
     $description = $_POST['description'];
