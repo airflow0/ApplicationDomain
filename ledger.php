@@ -102,7 +102,7 @@ while($transaction = $balance_troll->fetch())
 							<th>DEBIT</th>
 							<th>CREDIT</th>
 							<th>BALANCE</th>
-							<th style="width: 5%">PR</th>
+							<th style="width: 4%">PR</th>
 						</tr>
 					</thead>
 					<tbody>
