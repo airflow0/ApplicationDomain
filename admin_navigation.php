@@ -116,20 +116,19 @@ $picture = $userinfo['picture_directory'];
                         <thead></thead>
                         <tbody>
                             <tr>
-                                <td class="finan_item">Balance Sheet</td>
+                                <td><a class="finan_item" href="balancesheet">Balance Sheet</a></td>
                             </tr>
                             <tr>
-                                <td class="finan_item">Income Statement</td>
+                                <td><a class="finan_item" href="balancesheet">Income Statement</a></td>
                             </tr>
                             <tr>
-                                <td class="finan_item">Retained Earnings Statement</td>
+                                <td><a class="finan_item" href="balancesheet">Retained Earnings Statement</a></td>
                             </tr>
                         </tbody>
                     </table>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-secondary" id="viewReportButton">View</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
                 </div>
 
         </div>
