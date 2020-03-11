@@ -518,4 +518,12 @@ input[type="checkbox"] {
 
 .finan_item {
     font-size: 18px;
+    text-decoration: none;
+    color: white;
+}
+
+.finan_item:hover {
+    text-decoration: underline;
+    color: #A9D1B4;
+
 }
