@@ -515,3 +515,7 @@ input[type="checkbox"] {
 .nav-hover-link:hover:after {
     right: 0;
 }
+
+.finan_item {
+    font-size: 18px;
+}
