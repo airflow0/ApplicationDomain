@@ -110,7 +110,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
     <div class="border border-secondary rounded bg-dark" style="width: 100%">
         <div style="padding: 10px; width: 100%">
-            <table id="list-journal-table-view" class="table hover table-bordered table-dark" style="width: 100%">
+            <table id="list-journal-table-view" class="table hover table-striped table-bordered table-dark" style="width: 100%">
                 <thead>
                 <tr>
                     <th>JOURNAL #</th>

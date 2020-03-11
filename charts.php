@@ -156,7 +156,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-<div class="body-format" style="padding: 20px; color: #FFFFFF">
+<div class="bd-highlight body-format" style="padding: 20px; color: #FFFFFF">
     <div class="d-flex justify-content-between">
         <div class="p-2">
             <h1 style="text-align: left; font-size: 26px; margin-bottom:-5px">Chart of Accounts</h1>
