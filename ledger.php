@@ -34,11 +34,17 @@ while($credit_row = $credit->fetch()):
 endwhile;
 
 $balance = 0;
+$count = 0;
 $balance_array = [];
+
 foreach($debitarray as $debit)
 {
-    echo $debit;
+    $balance = $balance + $debitarray[$count];
+    array_push($balance_array, $balance);
+    $count = $count + 1;
 }
+print_r($balance_array);
+
 ?>
 
 <!doctype html>

@@ -156,10 +156,6 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 </head>
 
 <body>
-<?php
-
-    echo $_SESSION['isAdmin'];
-?>
 <div class="body-format" style="padding: 20px; color: #FFFFFF">
     <div class="d-flex justify-content-between">
         <div class="p-2">
