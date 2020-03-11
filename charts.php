@@ -51,7 +51,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             });
             $('#account_table tbody').on('dblclick', 'tr', function () {
                 var data = table.row( this ).data();
-                var url = 'ledger?accountname=' +data[0] +'&accountid='+data[1];
+                var url = 'ledger?accountname=' +data[0] +'&accountid='+data[1] +'&category='+ data[3];
                 $(location).attr('href',url);
             } );
 

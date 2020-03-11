@@ -6,7 +6,33 @@ require('admin_navigation.php');
 $accountID = $_GET['accountid'];
 $accountName = $_GET['accountname'];
 
+$journal_data = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+$journal_data->bindValue(":accID", $accountID);
+$journal_data->execute();
+$journal_data->setFetchMode(PDO::FETCH_ASSOC);
+$debitarray = [];
+$debit = $pdo->prepare("SELECT debit FROM journal_data WHERE accID=:accID");
+$debit->bindValue(":accID", $accountID);
+$debit->execute();
+$debit->setFetchMode(PDO::FETCH_ASSOC);
+while($debit_row = $debit->fetch()):
+    $money = preg_replace('/[^\d,\.]/', '', $debit_row['debit']);
+    $money = str_replace(',', '', $money);
+    array_push($debitarray, $money);
+endwhile;
+print_r($debitarray);
 
+$creditarray = [];
+$credit = $pdo->prepare("SELECT credit FROM journal_data WHERE accID=:accID");
+$credit->bindValue(":accID", $accountID);
+$credit->execute();
+$credit->setFetchMode(PDO::FETCH_ASSOC);
+while($credit_row = $credit->fetch()):
+    $money = preg_replace('/[^\d,\.]/', '', $credit_row['credit']);
+    $money = str_replace(',', '', $money);
+    array_push($creditarray, $money);
+endwhile;
+print_r($creditarray);
 ?>
 
 <!doctype html>
@@ -54,23 +80,28 @@ $accountName = $_GET['accountname'];
 						</tr>
 					</thead>
 					<tbody>
+                    <?php
+                    while ($rowAssets = $journal_data->fetch()): ?>
 						<tr>
-							<td>03/01/2020</td>
-							<td></td>
-							<td>0</td>
-							<td>0</td>
-							<td>0</td>
-							<td><a class="btn btn-secondary btn-sm" href="#" role="button">View</a></td>
-						</tr>
-						<tr>
-							<td>03/03/2020</td>
-							<td>Cash acquistion and payroll</td>
-							<td>1500</td>
-							<td>5000</td>
-							<td>3500</td>
-							<td><a class="btn btn-secondary btn-sm" href="#" role="button">View</a></td>
-						</tr>
+							<td>
+                                <?php
+                                $rID = $rowAssets['referenceID'];
+                                $stmt = $pdo->prepare('SELECT dateCreated FROM journal where referenceID=:referenceID');
+                                $stmt->bindValue(":referenceID", $rID);
+                                $stmt->execute();
+                                $stmt = $stmt->fetch(PDO::FETCH_ASSOC);
+                                $dateCreated = $stmt['dateCreated'];
+                                echo htmlspecialchars($dateCreated);
+                                ?>
 
+                            </td>
+							<td><?php echo htmlspecialchars($rowAssets['description']); ?></td>
+							<td><?php echo htmlspecialchars($rowAssets['debit']); ?></td>
+							<td><?php echo htmlspecialchars($rowAssets['credit']); ?></td>
+							<td>0</td>
+							<td><a class="btn btn-secondary btn-sm" href="/edit_journal?referenceID=<?php echo $rowAssets['referenceID']; ?>" role="button">View</a></td>
+						</tr>
+                    <?php  endwhile; ?>
 					</tbody>
 				</table>
 			</div>
