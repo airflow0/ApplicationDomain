@@ -38,7 +38,7 @@ $picture = $userinfo['picture_directory'];
 
 </head>
 <body>
-</body>
+
 <nav class="navbar navbar-expand-sm shadow p-3 mb-5" style="background-color:#333F50; color:white">
     <a class="navbar-brand" href="<?php
     if($admin == "1")
@@ -64,8 +64,10 @@ $picture = $userinfo['picture_directory'];
                 <a class="nav-link nav-hover-link" href="list_journals">List of Journal Entries</a>
             </li>
             <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
-                <a class="nav-link nav-hover-link" href="journal_entry">Add Journal Entry</a>
+                <a class="nav-link nav-hover-link" href="#finan_modal" data-toggle="modal">Financial Reports</a>
             </li>
+
+
             <?php
 
             if($admin == "1")
@@ -96,5 +98,43 @@ $picture = $userinfo['picture_directory'];
         </ul>
     </div>
 </nav>
+
+<!-- modal for financial reports -->
+<div class="modal fade bg-dark" id="finan_modal" tabindex="-1" role="dialog" aria-labelledby="finan_modal" aria-hidden="true">
+    <div class="modal-dialog modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="selectReportModalLabel">Select financial report</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+                <div class="modal-body">
+                    <!-- table to select financial report -->
+                    <table id="finan-report-table" class="table hover table-bordered table-striped table-dark">
+                        <thead></thead>
+                        <tbody>
+                            <tr>
+                                <td class="finan_item">Balance Sheet</td>
+                            </tr>
+                            <tr>
+                                <td class="finan_item">Income Statement</td>
+                            </tr>
+                            <tr>
+                                <td class="finan_item">Retained Earnings Statement</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-secondary" id="viewReportButton">View</button>
+                </div>
+
+        </div>
+    </div>
+</div>
+
 </body>
 </html>
