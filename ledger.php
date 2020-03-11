@@ -5,7 +5,7 @@ require('admin_navigation.php');
 
 $accountID = $_GET['accountid'];
 $accountName = $_GET['accountname'];
-
+$category = $_GET['category'];
 $journal_data = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
 $journal_data->bindValue(":accID", $accountID);
 $journal_data->execute();
@@ -26,13 +26,28 @@ while($transaction = $balance_troll->fetch())
     $debit_money = str_replace(',', '', $debit_money);
     if($debit_money != null)
     {
-        $balance = $balance + $debit_money;
+        if($category == 'Asset' || $category == 'Expenses')
+        {
+            $balance = $balance + $debit_money;
+        }
+        else
+        {
+            $balance = $balance - $debit_money;
+        }
     }
     $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
     $credit_money = str_replace(',', '', $credit_money);
     if($credit_money != null)
     {
-        $balance = $balance - $credit_money;
+        if($category == 'Asset' || $category == 'Expenses')
+        {
+            $balance = $balance - $credit_money;
+        }
+        else
+        {
+            $balance = $balance + $credit_money;
+        }
+
     }
     array_push($balance_array, $balance);
 
