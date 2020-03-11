@@ -13,8 +13,6 @@ $accIDS->setFetchMode(PDO::FETCH_ASSOC);
 
 $count = 0;
 $balance_array = [];
-$balance_total = 0;
-$balance_total_array = [];
 while($accounts = $accIDS->fetch())
 {
     $balance = 0;
@@ -29,21 +27,18 @@ while($accounts = $accIDS->fetch())
         if($debit_money != null)
         {
             $balance = $balance + $debit_money;
-            $balance_total = $balance + $debit_money;
         }
         $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
         $credit_money = str_replace(',', '', $credit_money);
         if($credit_money != null)
         {
             $balance = $balance - $credit_money;
-            $balance_total = $balance - $credit_money;
         }
-        array_push($balance_total_array, $balance_total);
+
     }
     array_push($balance_array, $balance);
 }
 print_r($balance_array);
-print_r($balance_total)
 
 
 
@@ -85,20 +80,37 @@ print_r($balance_total)
                     <td style="width:65%"></td>
                     <td></td>
                 </tr>
-                <tr>
-                    <td></td>
-                    <td scope="row">Asset #1</td>
-                    <td>100.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td scope="row">Asset #2</td>
-                    <td>200.00</td>
-                </tr>
+                <?php
+                $accIDS = $pdo->prepare("SELECT accName FROM assets");
+                $accIDS->execute();
+                $accIDS->setFetchMode(PDO::FETCH_ASSOC);
+                $i = 0;
+                $asset_total = 0;
+                while($accNames = $accIDS->fetch()):
+                {
+                    $asset_total = $asset_total + $balance_array[$i];
+                    ?>
+                    <tr>
+                        <td></td>
+                        <td scope="row"><?php echo htmlspecialchars($accNames['accName']); ?></td>
+                        <td><?php $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                            echo $fmt->formatCurrency($balance_array[$i], "USD")."\n";
+
+                            ?></td>
+                    </tr>
+
+                    <?php
+                    $i++;
+                }
+                endwhile;
+                ?>
                 <tr>
                     <td></td>
                     <th scope="row">Total Assets</th>
-                    <td>300.00</td>
+                    <td><?php
+                        $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                        echo $fmt->formatCurrency($asset_total, "USD")."\n";
+                        ?></td>
                 </tr>
 
                 </tbody>
