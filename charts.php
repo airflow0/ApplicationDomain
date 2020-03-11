@@ -169,14 +169,14 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
 
     <div class="border border-secondary rounded bg-dark">
         <div style="padding: 10px">
-        <table id="account_table" class="table hover table-bordered table-dark">
+        <table id="account_table" class="table hover table-bordered table-striped table-dark">
             <thead>
             <tr>
-                <th scope="col">Account Name</th>
-                <th scope="col">Account ID</th>
-                <th scope="col">Description</th>
-                <th scope="col">Account Category</th>
-                <th scope="col">Date/Time Added</th>
+                <th scope="col">ACCOUNT NAME</th>
+                <th scope="col">ACCOUNT ID</th>
+                <th scope="col">DESCRIPTION</th>
+                <th scope="col">ACCOUNT CATEGORY</th>
+                <th scope="col">DATE/TIME ADDED</th>
             </tr>
             </thead>
             <tbody>
