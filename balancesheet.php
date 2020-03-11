@@ -38,8 +38,72 @@ while($accounts = $accIDS->fetch())
     }
     array_push($balance_array, $balance);
 }
-print_r($balance_array);
 
+
+$liability_accIDS = $pdo->prepare("SELECT accID FROM liability");
+$liability_accIDS->execute();
+$liability_accIDS->setFetchMode(PDO::FETCH_ASSOC);
+
+$count = 0;
+$lia_balance_array = [];
+while($accounts = $liability_accIDS->fetch())
+{
+    $balance = 0;
+    $balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $balance_troll->bindValue(":accID", $accounts['accID']);
+    $balance_troll->execute();
+    $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $balance_troll->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        if($debit_money != null)
+        {
+            $balance = $balance - $debit_money;
+        }
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($credit_money != null)
+        {
+            $balance = $balance + $credit_money;
+        }
+
+    }
+    array_push($lia_balance_array, $balance);
+}
+
+$equity_accIDS = $pdo->prepare("SELECT accID FROM equity");
+$equity_accIDS->execute();
+$equity_accIDS->setFetchMode(PDO::FETCH_ASSOC);
+
+$count = 0;
+$eq_balance_array = [];
+while($accounts = $equity_accIDS->fetch())
+{
+    $balance = 0;
+    $balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $balance_troll->bindValue(":accID", $accounts['accID']);
+    $balance_troll->execute();
+    $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $balance_troll->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        if($debit_money != null)
+        {
+            $balance = $balance - $debit_money;
+        }
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($credit_money != null)
+        {
+            $balance = $balance + $credit_money;
+        }
+
+    }
+    array_push($eq_balance_array, $balance);
+}
+print_r($eq_balance_array);
 
 
 
@@ -123,20 +187,37 @@ print_r($balance_array);
                     <td style="width:65%"></td>
                     <td></td>
                 </tr>
+                <?php
+                $accIDS = $pdo->prepare("SELECT accName FROM liability");
+                $accIDS->execute();
+                $accIDS->setFetchMode(PDO::FETCH_ASSOC);
+                $i = 0;
+                $lia_total = 0;
+                while($accNames = $accIDS->fetch()):
+                    {
+                        $lia_total = $lia_total + $lia_balance_array[$i];
+                        ?>
+                        <tr>
+                            <td></td>
+                            <td scope="row"><?php echo htmlspecialchars($accNames['accName']); ?></td>
+                            <td><?php $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                                echo $fmt->formatCurrency($lia_balance_array[$i], "USD")."\n";
+
+                                ?></td>
+                        </tr>
+
+                        <?php
+                        $i++;
+                    }
+                endwhile;
+                ?>
                 <tr>
                     <td></td>
-                    <td scope="row">Liability #1</td>
-                    <td>10.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <td scope="row">Liability #2</td>
-                    <td>20.00</td>
-                </tr>
-                <tr>
-                    <td></td>
-                    <th scope="row">Total Liabilities</th>
-                    <td>30.00</td>
+                    <th scope="row">Total Assets</th>
+                    <td><?php
+                        $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                        echo $fmt->formatCurrency($lia_total, "USD")."\n";
+                        ?></td>
                 </tr>
 
                 </tbody>

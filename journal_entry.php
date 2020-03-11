@@ -1,8 +1,6 @@
 <?php
 
 require('database.php');
-require('admin_navigation.php');
-
 
 $time = date("Y-m-d H:i:s", time());
 $clientID = $_SESSION['userid'];
