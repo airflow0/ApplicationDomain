@@ -163,6 +163,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         </div>
 
         <div class="p-2">
+            <a><img class="calendar-icon" src="images/calendar.png" style="width:30px; margin-right: 10px" alt="Calendar" data-toggle="modal" data-target="#modalCalendar"></a>
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#modalEmail">Email</button>
         </div>
     </div>
@@ -309,6 +310,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         </div>
     </div>
 </div>
+
 <!-- Edit Account Modal -->
 <div class="modal fade bg-dark" id="EditAccountModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
@@ -399,51 +401,119 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                                         <a class="dropdown-item" href="#">jameslee123@yahoo.com</a>
                                         <a class="dropdown-item" href="#">dannyboy2020@gmail.com</a>
                                     </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Input for email subject-->
-                    <div class="form-group">
-                        <div class="row" style="margin-top: 15px">
-                            <div class="col-sm-auto">
-                                <label for="inputSubject">Subject</label>
+                        <!-- Input for email subject-->
+                        <div class="form-group">
+                            <div class="row" style="margin-top: 15px">
+                                <div class="col-sm-auto">
+                                    <label for="inputSubject">Subject</label>
+                                </div>
+                                <div class="col-lg">
+                                    <input type="text" class="form-control" id="inputSubject" placeholder="Enter subject">
+                                </div>
                             </div>
-                            <div class="col-lg">
-                                <input type="text" class="form-control" id="inputSubject" placeholder="Enter subject">
+                        </div>
+
+                        <!-- Input for email message-->
+                        <div class="form-group">
+                            <label for="inputMessage">Message</label>
+                            <textarea class="form-control" id="inputMessage" rows="12" placeholder="..."></textarea>
+                        </div>
+
+                        <!--Input for attachments-->
+                        <div class="input-group mb-3">
+                            <div class="input-group-prepend">
+                                <span class="input-group-text">Attachments</span>
+                            </div>
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="inputAttachment">
+                                <label class="custom-file-label" for="inputAttachment">Choose file(s)</label>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Input for email message-->
-                    <div class="form-group">
-                        <label for="inputMessage">Message</label>
-                        <textarea class="form-control" id="inputMessage" rows="12" placeholder="..."></textarea>
                     </div>
-
-                    <!--Input for attachments-->
-                    <div class="input-group mb-3">
-                        <div class="input-group-prepend">
-                            <span class="input-group-text">Attachments</span>
-                        </div>
-                        <div class="custom-file">
-                            <input type="file" class="custom-file-input" id="inputAttachment">
-                            <label class="custom-file-label" for="inputAttachment">Choose file(s)</label>
-                        </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Send</button>
                     </div>
-
+                </form>
             </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                <button type="button" class="btn btn-primary">Send</button>
-            </div>
-            </form>
         </div>
     </div>
 </div>
 
+<!-- Calendar modal -->
+<div class="modal fade bg-dark" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Select date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label for="from">From</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="date" class="form-control" id="from"/>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row" style="margin-top: 15px">
+                                <div class="col-sm-3">
+                                    <label for="to">To</label>
+                                </div>
+                                <div class="col-md">
+                                    <input type="date" class="form-control" id="to"/>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="row" style="margin-top: 15px">
+                                <div class="form-check">
+                                    <div class="col-md">
+                                        <input class="form-check-input" type="checkbox" value="" id="show-all-dates">
+                                        <label class="form-check-label" for="show-all-dates">
+                                            Show all dates
+                                        </label>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary">Save</button>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script type="text/javascript">
+
+    $(function () {
+        $('#from').datetimepicker();
+        $('#to').datetimepicker({
+            useCurrent: false //Important! See issue #1075
+        });
+        $("#from").on("dp.change", function (e) {
+            $('#to').data("DateTimePicker").minDate(e.date);
+        });
+        $("#from").on("dp.change", function (e) {
+            $('#to').data("DateTimePicker").maxDate(e.date);
+        });
+    });
 
     $('#addAccountButton').click( function ()
     {

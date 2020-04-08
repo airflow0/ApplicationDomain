@@ -104,6 +104,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
         </div>
 
         <div class="p-2">
+            <a><img class="calendar-icon" src="images/calendar.png" style="width:30px; margin-right: 10px" alt="Calendar" data-toggle="modal" data-target="#modalCalendar"></a>
             <a class="btn btn-primary" href="journal_entry" role="button">Add journal entry</a>
         </div>
     </div>
@@ -114,7 +115,8 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                 <thead>
                 <tr>
                     <th>JOURNAL #</th>
-                    <th>DATE</th>
+                    <th>ACCOUNTS</th>
+                    <th>DATE ADDED</th>
                     <th>NAME</th>
                     <th>STATUS</th>
                     <th style="width:9%"></th>
@@ -126,6 +128,8 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                 while ($rowAssets = $journal_data->fetch()): ?>
                     <tr>
                         <td><?php echo htmlspecialchars($rowAssets['referenceID']); ?></td>
+                       <!-------- ADD ACCOUNTS TO TABLE ------------->
+                        <td><?php echo htmlspecialchars($rowAssets['']); ?></td>
                         <td><?php echo htmlspecialchars($rowAssets['dateCreated']); ?></td>
 
                         <td><?php
@@ -144,7 +148,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                             $status = htmlspecialchars($rowAssets['status']);
                             if($status == -1)
                             {
-                                echo 'Denied';
+                                echo 'Rejected';
                             } elseif ($status == 0)
                             {
                                 echo 'Pending';
@@ -204,6 +208,62 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
             </div>
         </div>
     </div>
+</div>
+
+<!-- Calendar modal -->
+<div class="modal fade bg-dark" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Select date</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body bg-light">
+                <div class="form-group">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <label for="from">From</label>
+                        </div>
+                        <div class="col-md">
+                            <input type="date" class="form-control" id="from"/>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row" style="margin-top: 15px">
+                            <div class="col-sm-3">
+                                <label for="to">To</label>
+                            </div>
+                            <div class="col-md">
+                                <input type="date" class="form-control" id="to"/>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <div class="row" style="margin-top: 15px">
+                            <div class="form-check">
+                                <div class="col-md">
+                                    <input class="form-check-input" type="checkbox" value="" id="show-all-dates">
+                                    <label class="form-check-label" for="show-all-dates">
+                                        Show all dates
+                                    </label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-primary">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 
 </html>

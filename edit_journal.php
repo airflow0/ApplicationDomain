@@ -195,9 +195,9 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                 <tr>
                     <th>#</th>
                     <th>ACCOUNT</th>
+                    <th>DESCRIPTION</th>
                     <th>DEBITS</th>
                     <th>CREDITS</th>
-                    <th>DESCRIPTION</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -206,9 +206,9 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                     <tr>
                         <td><?php echo htmlspecialchars($rowAssets['journal_data_id']); ?></td>
                         <td><?php echo htmlspecialchars($rowAssets['accName']); ?></td>
+                        <td><?php echo htmlspecialchars($rowAssets['description']); ?></td>
                         <td><?php echo htmlspecialchars($rowAssets['debit']); ?></td>
                         <td><?php echo htmlspecialchars($rowAssets['credit']); ?></td>
-                        <td><?php echo htmlspecialchars($rowAssets['description']); ?></td>
                     </tr>
                 <?php  endwhile; ?>
                 </tbody>
