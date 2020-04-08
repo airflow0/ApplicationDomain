@@ -32,7 +32,7 @@ if(isset($_POST['accountname']))
             $accID = $acc['accID'];
 
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 1)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
@@ -56,7 +56,7 @@ if(isset($_POST['accountname']))
             $accID = $acc['accID'];
 
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 2)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
@@ -81,7 +81,7 @@ if(isset($_POST['accountname']))
             $accID = $acc['accID'];
 
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 3)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
@@ -104,7 +104,7 @@ if(isset($_POST['accountname']))
             $accID = $acc['accID'];
 
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 4)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
@@ -127,7 +127,7 @@ if(isset($_POST['accountname']))
             $accID = $acc['accID'];
 
 
-            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID) values (:accName, :accID)");
+            $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 5)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();

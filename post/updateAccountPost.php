@@ -37,7 +37,7 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accID', $accountID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName WHERE accName=:previousAccName");
+            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName, accountType=1 WHERE accName=:previousAccName");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':previousAccName', $previousName);
             $stmt->execute();
@@ -76,7 +76,7 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accID', $accountID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName WHERE accName=:previousAccName");
+            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName, accountType=2 WHERE accName=:previousAccName");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':previousAccName', $previousName);
             $stmt->execute();
@@ -115,7 +115,7 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accID', $accountID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName WHERE accName=:previousAccName");
+            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName, accountType=3 WHERE accName=:previousAccName");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':previousAccName', $previousName);
             $stmt->execute();
@@ -152,7 +152,7 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accID', $accountID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName WHERE accName=:previousAccName");
+            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName, accountType=4 WHERE accName=:previousAccName");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':previousAccName', $previousName);
             $stmt->execute();
@@ -189,7 +189,7 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accID', $accountID);
             $stmt->execute();
 
-            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName WHERE accName=:previousAccName");
+            $stmt = $pdo->prepare("UPDATE accountnames SET accName=:accName, accountType=5 WHERE accName=:previousAccName");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':previousAccName', $previousName);
             $stmt->execute();

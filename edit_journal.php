@@ -32,6 +32,102 @@ $journal_data->bindValue(":referenceID", $referenceID);
 $journal_data->execute();
 $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
+$journal_date = $pdo->prepare('SELECT dateCreated FROM journal WHERE referenceID=:referenceID');
+$journal_date->bindValue(":referenceID", $referenceID);
+$journal_date->execute();
+$j_d_fetch = $journal_date->fetch(PDO::FETCH_ASSOC);
+$date = $j_d_fetch['dateCreated'];
+$date_php = strtotime($date);
+$formatted = date("m/d/yy", $date_php);
+
+$balance = updateBalance($pdo, $referenceID);
+print $balance;
+function updateBalance(PDO $pdo, $referenceID)
+{
+    $balance = 0;
+
+    $stmt = $pdo->prepare('SELECT * FROM journal_data WHERE referenceID=:referenceID');
+    $stmt->bindValue(':referenceID', $referenceID);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $stmt->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($transaction['accountType'] == 1)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance + $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance - $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 2)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 3)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 4)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 5)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance + $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance - $credit_money;
+            }
+        }
+        else
+        {
+
+        }
+    }
+    $stmt=$pdo->prepare('UPDATE journal SET balance=:balance WHERE referenceID=:referenceID');
+    $stmt->bindValue(':balance', $balance);
+    $stmt->bindValue(':referenceID', $referenceID);
+    $stmt->execute();
+    if($balance != 0)
+    {
+        $stmt=$pdo->prepare('UPDATE journal SET status=-1 WHERE referenceID=:referenceID');
+        $stmt->bindValue(':referenceID', $referenceID);
+        $stmt->execute();
+    }
+    return $balance;
+}
 
 ?>
 
@@ -67,15 +163,15 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
             $('#addLineSubmit').click(function(){
                 var rowCount = table.data().length;
                 var accountID = $('#modalAddLine #accountCategoryOption').val();
-                var money = $('#modalAddLine #money').val();
-                var debitorcredit = $('#modalAddLine #debitorcredit').val();
+                var debit = $('#modalAddLine #debit').val();
+                var credit = $('#modalAddLine #credit').val();
                 var addDescription = $('#modalAddLine #addDescription').val();
                 var type = "addLine";
                 $.ajax(
                     {
                         url: 'post/journal_post',
                         method: 'post',
-                        data :{type:type,rowCount:rowCount, accountID: accountID, money:money, debitorcredit:debitorcredit, addDescription: addDescription, referenceID: referenceID},
+                        data :{type:type,rowCount:rowCount, accountID: accountID, debit:debit, credit:credit, addDescription: addDescription, referenceID: referenceID},
                         success(data)
                         {
                             alert(data);
@@ -93,20 +189,10 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                     $('#modalEditLine').modal('show');
                     var data = table.row('.selected').data();
                     var debitorcredit = 0;
-
-                    if(data[2] == "")
-                    {
-                        debitorcredit = 2;
-                        $('#modalEditLine #editmoney').val(data[3]);
-                    }
-                    else if(data[3] == "")
-                    {
-                        debitorcredit = 1;
-                        $('#modalEditLine #editmoney').val(data[2]);
-                    }
                     $('#modalEditLine #accountCategoryOption').val(data[1]);
-                    $('#modalEditLine #editdoc').val(debitorcredit);
-                    $('#modalEditLine #editDescription').val(data[4]);
+                    $('#modalEditLine #debit').val(data[3]);
+                    $('#modalEditLine #credit').val(data[4]);
+                    $('#modalEditLine #editDescription').val(data[2]);
                 }
                 else
                 {
@@ -116,15 +202,15 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
             $('#EditLineSubmit').click(function(){
                 var rowCount = table.row('.selected').index();
                 var accountname = $('#modalEditLine #accountCategoryOption').val();
-                var money = $('#modalEditLine #editmoney').val();
-                var debitorcredit = $('#modalEditLine #editdoc').val();
+                var debit = $('#modalEditLine #debit').val();
+                var credit = $('#modalEditLine #credit').val();
                 var addDescription = $('#modalEditLine #editDescription').val();
                 var type = "editLine";
                 $.ajax(
                     {
                         url: 'post/journal_post',
                         method: 'post',
-                        data :{type:type,rowCount:rowCount, accountname: accountname, money:money, debitorcredit:debitorcredit, addDescription: addDescription, referenceID: referenceID},
+                        data :{type:type,rowCount:rowCount, accountname: accountname, debit:debit, credit:credit, addDescription: addDescription, referenceID: referenceID},
                         success(data)
                         {
                             alert(data);
@@ -169,14 +255,14 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
 <body>
 <div class="body-format" style="padding: 20px; color: #FFFFFF">
-    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Journal Entry #</h1>
+    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Journal Entry #<?php echo $referenceID; ?></h1>
     <div class="d-flex justify-content-between" style="padding-bottom: 5px">
         <div class="p-2">
             <div class="input-group mb-3">
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="journal-date">Journal Date</span>
                 </div>
-                <input type="date" class="form-control" placeholder="Select date" aria-label="Select date" aria-describedby="journal-date">
+                <input type="date" class="form-control" placeholder="" aria-label="Select date" aria-describedby="journal-date" value="<?php echo date('m/d/yy'); ?>">
             </div>
         </div>
         <div class="p-2">
@@ -295,13 +381,12 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-group mb-3">
-                        <select class="custom-select" id="debitorcredit">
-                            <option value="1">Debit</option>
-                            <option value="2">Credit</option>
-                        </select>
-                        <input type="text" class="form-control" placeholder="Input Value" aria-label="accountName" aria-describedby="basic-addon1" id="money" data-type='currency' required>
+                        <input type="text" class="form-control" placeholder="Debit" aria-label="accountName" aria-describedby="basic-addon1" id="debit" data-type='currency' required>
+                        <input type="text" class="form-control" placeholder="Credit" aria-label="accountName" aria-describedby="basic-addon1" id="credit" data-type='currency' required>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback"></div>
+
+
                     </div>
 
                     <!-- Input for description-->
@@ -390,11 +475,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                         <div class="invalid-feedback"></div>
                     </div>
                     <div class="input-group mb-3">
-                        <select class="custom-select" id="editdoc">
-                            <option value="1">Debit</option>
-                            <option value="2">Credit</option>
-                        </select>
-                        <input type="text" class="form-control" placeholder="Input Value" aria-label="accountName" aria-describedby="basic-addon1" id="editmoney" data-type='currency' required>
+                        <input type="text" class="form-control" placeholder="Debit" aria-label="accountName" aria-describedby="basic-addon1" id="debit" data-type='currency' required>
+                        <input type="text" class="form-control" placeholder="Credit" aria-label="accountName" aria-describedby="basic-addon1" id="credit" data-type='currency' required>
                         <div class="valid-feedback"></div>
                         <div class="invalid-feedback"></div>
                     </div>
