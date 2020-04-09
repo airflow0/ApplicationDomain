@@ -44,19 +44,19 @@ if ($_SESSION['isAdmin'] = true) {
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">ADD: NET INCOME</th>
-                    <td>10.00</td>
+                    <td>$600.00</td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">TOTAL</th>
-                    <td>0.00</td>
+                    <td>$600.00</td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">LESS: DIVIDENDS</th>
-                    <td>2.00</td>
+                    <td>($0.00)</td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">RETAINED EARNINGS</th>
-                    <td>8.00</td>
+                    <td>$600.00</td>
                 </tr>
 
                 </tbody>
