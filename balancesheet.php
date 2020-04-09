@@ -212,7 +212,7 @@ while($accounts = $equity_accIDS->fetch())
                 ?>
                 <tr>
                     <td></td>
-                    <th scope="row">Total Assets</th>
+                    <th scope="row">Total Liabilities</th>
                     <td><?php
                         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
                         echo $fmt->formatCurrency($lia_total, "USD")."\n";
@@ -256,7 +256,7 @@ while($accounts = $equity_accIDS->fetch())
                 ?>
                 <tr>
                     <td></td>
-                    <th scope="row">Total Assets</th>
+                    <th scope="row">Total Equities</th>
                     <td><?php
                         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
                         echo $fmt->formatCurrency($equity_total, "USD")."\n";
