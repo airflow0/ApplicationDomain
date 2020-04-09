@@ -119,10 +119,10 @@ $picture = $userinfo['picture_directory'];
                                 <td><a class="finan_item" href="/balancesheet">Balance Sheet</a></td>
                             </tr>
                             <tr>
-                                <td><a class="finan_item" href="balancesheet">Income Statement</a></td>
+                                <td><a class="finan_item" href="/incomestatement">Income Statement</a></td>
                             </tr>
                             <tr>
-                                <td><a class="finan_item" href="balancesheet">Retained Earnings Statement</a></td>
+                                <td><a class="finan_item" href="/retainedearnings">Retained Earnings Statement</a></td>
                             </tr>
                         </tbody>
                     </table>

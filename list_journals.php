@@ -3,9 +3,106 @@
 require('database.php');
 require('admin_navigation.php');
 
-$journal_data = $pdo->query('SELECT referenceID, createdBy, dateCreated, status from journal');
+$journal_data = $pdo->query('SELECT referenceID, createdBy, dateCreated, status, balance from journal');
 $journal_data->execute;
 $journal_data->setFetchMode(PDO::FETCH_ASSOC);
+
+
+$stmt = $pdo->prepare('SELECT referenceID from journal');
+$stmt->execute();
+$stmt->setFetchMode(PDO::FETCH_ASSOC);
+while($j = $stmt->fetch()):
+    updateBalance($pdo, $j['referenceID']);
+
+endwhile;
+
+
+function updateBalance(PDO $pdo, $referenceID)
+{
+    $balance = 0;
+
+    $stmt = $pdo->prepare('SELECT * FROM journal_data WHERE referenceID=:referenceID');
+    $stmt->bindValue(':referenceID', $referenceID);
+    $stmt->execute();
+    $stmt->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $stmt->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($transaction['accountType'] == 1)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance + $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance - $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 2)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 3)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 4)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance - $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance + $credit_money;
+            }
+        }
+        else if ($transaction['accountType'] == 5)
+        {
+            if($debit_money != null)
+            {
+                $balance = $balance + $debit_money;
+            }
+            if($credit_money != null)
+            {
+                $balance = $balance - $credit_money;
+            }
+        }
+        else
+        {
+
+        }
+    }
+    $stmt=$pdo->prepare('UPDATE journal SET balance=:balance WHERE referenceID=:referenceID');
+    $stmt->bindValue(':balance', $balance);
+    $stmt->bindValue(':referenceID', $referenceID);
+    $stmt->execute();
+    if($balance != 0)
+    {
+        $stmt=$pdo->prepare('UPDATE journal SET status=-1 WHERE referenceID=:referenceID');
+        $stmt->bindValue(':referenceID', $referenceID);
+        $stmt->execute();
+    }
+    return $balance;
+}
 ?>
 
 <!doctype html>
@@ -20,6 +117,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
     <!-- Datatables -->
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
 
@@ -29,6 +127,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
     <title>CountOnUs - List of General Journal Entries</title>
 
     <script type="text/javascript">
+
         $(document).ready(function () {
             var table = $('#list-journal-table-view').DataTable();
             $('#list-journal-table-view tbody').on('click', 'tr', function () {
@@ -108,7 +207,6 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
             <a class="btn btn-primary" href="journal_entry" role="button">Add journal entry</a>
         </div>
     </div>
-
     <div class="border border-secondary rounded bg-dark" style="width: 100%">
         <div style="padding: 10px; width: 100%">
             <table id="list-journal-table-view" class="table hover table-striped table-bordered table-dark" style="width: 100%">
@@ -118,6 +216,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                     <th>ACCOUNTS</th>
                     <th>DATE ADDED</th>
                     <th>NAME</th>
+                    <th>BALANCE</th>
                     <th>STATUS</th>
                     <th style="width:9%"></th>
                 </tr>
@@ -125,11 +224,35 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
                 <tbody>
                 <?php
-                while ($rowAssets = $journal_data->fetch()): ?>
+                while ($rowAssets = $journal_data->fetch()):
+
+                    ?>
+
                     <tr>
                         <td><?php echo htmlspecialchars($rowAssets['referenceID']); ?></td>
                        <!-------- ADD ACCOUNTS TO TABLE ------------->
-                        <td><?php echo htmlspecialchars($rowAssets['']); ?></td>
+                        <td><?php
+                            $stmt = $pdo->prepare('SELECT accName from journal_data WHERE referenceID=:referenceID');
+                            $stmt->bindValue(':referenceID', $rowAssets['referenceID']);
+                            $stmt->execute();
+                            $stmt->setFetchMode(PDO::FETCH_ASSOC);
+                            $arr = [];
+                            while($name = $stmt->fetch()):
+                                $name_f = $name['accName'];
+                                if(in_array($name_f, $arr))
+                                {
+
+                                }
+                                else
+                                {
+                                    array_push($arr, $name_f);
+                                }
+                            endwhile;
+
+                                print_r(implode(', ', $arr));
+
+
+                            ?></td>
                         <td><?php echo htmlspecialchars($rowAssets['dateCreated']); ?></td>
 
                         <td><?php
@@ -143,6 +266,13 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                             $clientName = $f_display." ".$l_display;
 
                             echo htmlspecialchars($clientName); ?>
+                        </td>
+                        <td>
+                            <?php
+                            $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+                            echo $fmt->formatCurrency($rowAssets['balance'], "USD")."\n";
+
+                            ?>
                         </td>
                         <td><?php
                             $status = htmlspecialchars($rowAssets['status']);
@@ -224,7 +354,7 @@ $journal_data->setFetchMode(PDO::FETCH_ASSOC);
                 <div class="form-group">
                     <div class="row">
                         <div class="col-sm-3">
-                            <label for="from">From</label>
+                            <label for="from" >From</label>
                         </div>
                         <div class="col-md">
                             <input type="date" class="form-control" id="from"/>

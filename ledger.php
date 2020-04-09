@@ -11,47 +11,7 @@ $journal_data->bindValue(":accID", $accountID);
 $journal_data->execute();
 $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
-$balance = 0;
-$count = 0;
-$balance_array = [];
 
-$balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
-$balance_troll->bindValue(":accID", $accountID);
-$balance_troll->execute();
-$balance_troll->setFetchMode(PDO::FETCH_ASSOC);
-
-while($transaction = $balance_troll->fetch())
-{
-    $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
-    $debit_money = str_replace(',', '', $debit_money);
-    if($debit_money != null)
-    {
-        if($category == 'Asset' || $category == 'Expenses')
-        {
-            $balance = $balance + $debit_money;
-        }
-        else
-        {
-            $balance = $balance - $debit_money;
-        }
-    }
-    $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
-    $credit_money = str_replace(',', '', $credit_money);
-    if($credit_money != null)
-    {
-        if($category == 'Asset' || $category == 'Expenses')
-        {
-            $balance = $balance - $credit_money;
-        }
-        else
-        {
-            $balance = $balance + $credit_money;
-        }
-
-    }
-    array_push($balance_array, $balance);
-
-}
 ?>
 
 <!doctype html>

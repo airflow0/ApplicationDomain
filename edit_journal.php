@@ -41,7 +41,6 @@ $date_php = strtotime($date);
 $formatted = date("m/d/yy", $date_php);
 
 $balance = updateBalance($pdo, $referenceID);
-print $balance;
 function updateBalance(PDO $pdo, $referenceID)
 {
     $balance = 0;
@@ -123,6 +122,12 @@ function updateBalance(PDO $pdo, $referenceID)
     if($balance != 0)
     {
         $stmt=$pdo->prepare('UPDATE journal SET status=-1 WHERE referenceID=:referenceID');
+        $stmt->bindValue(':referenceID', $referenceID);
+        $stmt->execute();
+    }
+    else
+    {
+        $stmt=$pdo->prepare('UPDATE journal SET status=0 WHERE referenceID=:referenceID');
         $stmt->bindValue(':referenceID', $referenceID);
         $stmt->execute();
     }
@@ -255,7 +260,12 @@ function updateBalance(PDO $pdo, $referenceID)
 
 <body>
 <div class="body-format" style="padding: 20px; color: #FFFFFF">
-    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Journal Entry #<?php echo $referenceID; ?></h1>
+    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Current Balance: <?php
+        $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
+        echo $fmt->formatCurrency($balance, "USD")."\n";
+        ?>
+
+    </h1>
     <div class="d-flex justify-content-between" style="padding-bottom: 5px">
         <div class="p-2">
             <div class="input-group mb-3">
@@ -306,7 +316,6 @@ function updateBalance(PDO $pdo, $referenceID)
             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddLine">Add line</button>
             <button type="button" class="btn btn-secondary" data-toggle="modal" id="editLine">Edit line</button>
             <button type="button" class="btn btn-secondary" data-toggle="modal" id="deleteLine">Delete line</button>
-
         </div>
     </div>
 
