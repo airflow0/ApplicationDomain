@@ -157,6 +157,7 @@ function updateBalance(PDO $pdo, $referenceID)
     <title>CountOnUs - Journal Entry</title>
     <script type="text/javascript">
         $(document).ready(function () {
+            #journal-table-view
             var table = $('#journal-table-view').DataTable({
                 dom: 'lfBrtip',
                 buttons: [
@@ -219,6 +220,7 @@ function updateBalance(PDO $pdo, $referenceID)
                 var credit = $('#modalEditLine #credit').val();
                 var addDescription = $('#modalEditLine #editDescription').val();
                 var type = "editLine";
+                alert(rowCount + ' ' + accountname + 'type');
                 $.ajax(
                     {
                         url: 'post/journal_post',
