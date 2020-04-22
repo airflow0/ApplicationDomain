@@ -157,13 +157,7 @@ function updateBalance(PDO $pdo, $referenceID)
     <title>CountOnUs - Journal Entry</title>
     <script type="text/javascript">
         $(document).ready(function () {
-            #journal-table-view
-            var table = $('#journal-table-view').DataTable({
-                dom: 'lfBrtip',
-                buttons: [
-                    'print'
-                ]
-            });
+            var table = $('#journal-table-view').DataTable()
             $("#journal-table-view_wrapper > .dt-buttons").appendTo("div.p-2");
             var referenceID = '<?php echo $referenceID ?>';
             $('#journal-table-view tbody').on('click', 'tr', function () {
@@ -181,6 +175,7 @@ function updateBalance(PDO $pdo, $referenceID)
                 var credit = $('#modalAddLine #credit').val();
                 var addDescription = $('#modalAddLine #addDescription').val();
                 var type = "addLine";
+                alert(rowCount)
                 $.ajax(
                     {
                         url: 'post/journal_post',
@@ -220,7 +215,7 @@ function updateBalance(PDO $pdo, $referenceID)
                 var credit = $('#modalEditLine #credit').val();
                 var addDescription = $('#modalEditLine #editDescription').val();
                 var type = "editLine";
-                alert(rowCount + ' ' + accountname + 'type');
+                alert(rowCount + ' ' + accountname);
                 $.ajax(
                     {
                         url: 'post/journal_post',
