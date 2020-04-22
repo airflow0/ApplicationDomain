@@ -3,6 +3,9 @@
 define('DB_USER', 'root');
 define('DB_PASSWORD', 'Ksupassword1');
 define('HOST', 'localhost');
+define('DB_USER', 'remoteRoot');
+define('DB_PASSWORD', 'Ksupassword1');
+define('HOST', '73.137.228.147');
 define('DB', 'domainproject');
 
 $options = array (
