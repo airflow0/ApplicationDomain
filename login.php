@@ -132,7 +132,11 @@ function updateLoginAttempt(PDO $pdo, $data, $email)
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
-<img src="images/logo.png" style="width: 5%;"/>
+
+
+        <img class="mx-auto d-block" src="images/logo-revised.png" style="width: 15%; padding: 20px">
+
+
 <div class="loginContainer">
     <div class="login-box">
         <img src="/images/avatar3.png" class="avatar">
