@@ -95,12 +95,22 @@ function updateBalance(PDO $pdo, $referenceID)
     $stmt->bindValue(':balance', $balance);
     $stmt->bindValue(':referenceID', $referenceID);
     $stmt->execute();
-    if($balance != 0)
+
+    $stmt = $pdo->prepare('SELECT status FROM journal where referenceID=:referenceID');
+    $stmt->bindValue(':referenceID', $referenceID);
+    $stmt->execute();
+    $relay = $stmt->fetch(PDO::FETCH_ASSOC);
+    $status = $relay['status'];
+    if($status != 1)
     {
-        $stmt=$pdo->prepare('UPDATE journal SET status=-1 WHERE referenceID=:referenceID');
-        $stmt->bindValue(':referenceID', $referenceID);
-        $stmt->execute();
+        if($balance != 0)
+        {
+            $stmt=$pdo->prepare('UPDATE journal SET status=-1 WHERE referenceID=:referenceID');
+            $stmt->bindValue(':referenceID', $referenceID);
+            $stmt->execute();
+        }
     }
+
     return $balance;
 }
 ?>
