@@ -175,7 +175,6 @@ function updateBalance(PDO $pdo, $referenceID)
                 var credit = $('#modalAddLine #credit').val();
                 var addDescription = $('#modalAddLine #addDescription').val();
                 var type = "addLine";
-                alert(rowCount)
                 $.ajax(
                     {
                         url: 'post/journal_post',
