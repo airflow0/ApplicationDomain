@@ -72,6 +72,9 @@ $stmt->setFetchMode(PDO::FETCH_ASSOC);
             </table>
         </div>
     </div>
+    <div>
+        <a href="charts"><button type="button" class="btn btn-secondary" style="margin-top:10px" data-toggle="tooltip" data-placement="bottom" title='Back to Chart of Accounts'>Back to Accounts</button></a>
+    </div>
 </div>
 
 <script type="text/javascript">
