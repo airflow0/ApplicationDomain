@@ -296,7 +296,7 @@ function updateBalance(PDO $pdo, $referenceID)
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="journal-date">Journal Date</span>
                 </div>
-                <input type="date" class="form-control" placeholder="" aria-label="Select date" aria-describedby="journal-date" value="<?php echo date('m/d/yy'); ?>">
+                <input type="text" class="form-control" placeholder="" aria-label="Select date" aria-describedby="journal-date" value="<?php echo date('m/d/yy'); ?>">
             </div>
         </div>
         <div class="p-2">
