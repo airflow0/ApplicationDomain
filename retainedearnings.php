@@ -6,6 +6,63 @@ if ($_SESSION['isAdmin'] = true) {
 } else {
     require('navigation.php');
 }
+
+$time = date("m/yy", time());
+
+
+$rev = $pdo->prepare('SELECT accID, accName FROM revenue');
+$rev->execute();
+$rev_array = [];
+while ($revenue = $rev->fetch(PDO::FETCH_ASSOC)) {
+    $rev_balance = 0;
+    $stmt = $pdo->prepare('SELECT * FROM journal_data where accID=:accID');
+    $stmt->bindValue('accID', $revenue['accID']);
+    $stmt->execute();
+    while ($rev_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $rev_debit = preg_replace('/[^\d,\.]/', '', $rev_data['debit']);
+        $rev_debit = str_replace(',', '', $rev_debit);
+        if ($rev_debit != null) {
+            $rev_balance = $rev_balance - $rev_debit;
+        }
+        $rev_credit = preg_replace('/[^\d,\.]/', '', $rev_data['credit']);
+        $rev_credit = str_replace(',', '', $rev_credit);
+        if ($rev_credit != null) {
+            $rev_balance = $rev_balance + $rev_credit;
+        }
+
+    }
+    array_push($rev_array, $rev_balance);
+}
+
+print_r(array_sum($rev_array));
+
+$exp = $pdo->prepare('SELECT accID, accName FROM expenses');
+$exp->execute();
+$exp_array = [];
+while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
+    $exp_balance = 0;
+    $stmt = $pdo->prepare('SELECT * FROM journal_data where accID=:accID');
+    $stmt->bindValue('accID', $expense['accID']);
+    $stmt->execute();
+    while ($exp_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
+        $exp_debit = preg_replace('/[^\d,\.]/', '', $exp_data['debit']);
+        $exp_debit = str_replace(',', '', $exp_debit);
+        if ($exp_debit != null) {
+            $exp_balance = $exp_balance + $exp_debit;
+        }
+        $exp_credit = preg_replace('/[^\d,\.]/', '', $exp_data['credit']);
+        $exp_credit = str_replace(',', '', $exp_credit);
+        if ($rev_credit != null) {
+            $exp_balance = $exp_balance - $exp_credit;
+        }
+    }
+    array_push($exp_array, $exp_balance);
+}
+
+
+
+
+
 ?>
 
 <!doctype html>
@@ -29,7 +86,7 @@ if ($_SESSION['isAdmin'] = true) {
   					<div class="input-group-prepend">
     					<span class="input-group-text" id="month-year">Month/Year</span>
   					</div>
-  					<input type="text" class="form-control" placeholder="MM/YYYY" aria-label="Month/year" aria-describedby="month-year">
+  					<input type="text" class="form-control" placeholder="MM/YYYY" aria-label="Month/year" aria-describedby="month-year" value="<?php echo $time; ?>">
 				</div>
 			</span></h1>
     </div>

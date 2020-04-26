@@ -271,7 +271,19 @@ function updateBalance(PDO $pdo, $referenceID)
                var newBalance = balance.replace(/[^0-9\.-]/g, '');
                if(newBalance > 0 || newBalance < 0)
                {
-                   var r = confirm("You have an outstanding balance, if you decide to proceed the journal will be automatically reject!")
+                   var r = confirm("Journal not balanced! This will cause it to be automatically rejected!");
+                   if( r == true)
+                   {
+                       window.location.href = "/list_journals";
+                   }
+                   else
+                   {
+                   }
+               }
+               else
+               {
+                   alert('Journal Entry is now pending!')
+                   window.location.href = "/list_journals";
                }
 
             });
@@ -296,7 +308,7 @@ function updateBalance(PDO $pdo, $referenceID)
                 <div class="input-group-prepend">
                     <span class="input-group-text" id="journal-date">Journal Date</span>
                 </div>
-                <input type="text" class="form-control" placeholder="" aria-label="Select date" aria-describedby="journal-date" value="<?php echo date('m/d/yy'); ?>">
+                <input type="text" class="form-control" placeholder="" aria-label="Select date" aria-describedby="journal-date" value="<?php echo $formatted; ?>">
             </div>
         </div>
         <div class="p-2">
@@ -360,7 +372,6 @@ function updateBalance(PDO $pdo, $referenceID)
 
     <div class="d-flex justify-content-end" style="padding-top: 5px; padding-bottom: 18px">
         <div class="p-2">
-            <a class="btn btn-secondary" href="#" role="button">Cancel</a>
             <a class="btn btn-primary" href="#" role="button" id="submit_entry">Submit Entry</a>
         </div>
     </div>

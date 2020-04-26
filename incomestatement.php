@@ -7,8 +7,7 @@ if ($_SESSION['isAdmin'] = true) {
     require('navigation.php');
 }
 
-
-$date = $description = $debit = $credit = $affected = $explanation = "";
+$time = date("m/yy", time());
 
 $rev = $pdo->prepare('SELECT accID, accName FROM revenue');
 $rev->execute();
@@ -84,8 +83,8 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
   					<div class="input-group-prepend">
     					<span class="input-group-text" id="month-year">Month/Year</span>
   					</div>
-  					<input type="text" class="form-control" placeholder="MM/YYYY" aria-label="Month/year"
-                           aria-describedby="month-year">
+  					<input type="text" class="form-control" placeholder="MM/YYYY" aria-label="As Of"
+                           aria-describedby="month-year" value="<?php echo $time; ?>">
 				</div>
 			</span></h1>
     </div>

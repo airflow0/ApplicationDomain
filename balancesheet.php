@@ -6,7 +6,7 @@ if ($_SESSION['isAdmin'] = true) {
 } else {
     require('navigation.php');
 }
-
+$time = date("m/d/yy", time());
 $accIDS = $pdo->prepare("SELECT accID FROM assets");
 $accIDS->execute();
 $accIDS->setFetchMode(PDO::FETCH_ASSOC);
@@ -131,7 +131,7 @@ while($accounts = $equity_accIDS->fetch())
   					<div class="input-group-prepend">
     					<span class="input-group-text" id="as-of">As of</span>
   					</div>
-  					<input type="date" class="form-control" placeholder="MM/DD/YYYY" aria-label="As of" aria-describedby="as-of">
+  					<input type="text" class="form-control" placeholder="MM/DD/YYYY" aria-label="As of" aria-describedby="as-of" value="<?php echo $time; ?>">
 				</div>
 			</span></h1>
     </div>
