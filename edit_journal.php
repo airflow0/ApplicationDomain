@@ -158,6 +158,7 @@ function updateBalance(PDO $pdo, $referenceID)
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
 
     <title>CountOnUs - Journal Entry</title>
     <script type="text/javascript">
@@ -268,6 +269,7 @@ function updateBalance(PDO $pdo, $referenceID)
 </head>
 
 <body>
+
 <div class="body-format" style="padding: 20px; color: #FFFFFF">
     <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Current Balance: <?php
         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );

@@ -128,23 +128,34 @@ function updateBalance(PDO $pdo, $referenceID)
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/pdfmake.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
 
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/js/bootstrap.bundle.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
     <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
+    <script type="text/javascript" src="https://cdn.datatables.net/1.10.20/js/jquery.dataTables.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.4.0/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
+
+
+
+
 
     <title>CountOnUs - List of General Journal Entries</title>
 
     <script type="text/javascript">
-
+        minDateFilter = "";
+        maxDateFilter = "";
         $(document).ready(function () {
             var table = $('#list-journal-table-view').DataTable({
                 dom: 'lfBrtip',
                 buttons: [
                     'print'
-                ]
+                ],
             });
             $("#list-journal-table-view_wrapper > .dt-buttons").appendTo("div.print_button");
 
@@ -207,9 +218,60 @@ function updateBalance(PDO $pdo, $referenceID)
                         }
                     );
                 });
-            } );
+            });
 
+            $('#from').datepicker({
+                "onSelect": function(date) {
+                    minDateFilter = new Date(date).getTime();
+                }
+            }).keyup(function() {
+
+
+            });
+
+
+            $('#to').datepicker({
+                "onSelect": function(date) {
+                    maxDateFilter = new Date(date).getTime();
+                }
+            }).keyup(function() {
+
+
+            });
+
+
+
+            $('#calendar_submit').click(function () {
+                table.draw();
+            });
+
+            $('#iconCalendar').click(function(){
+               $('#modalCalendar').draggable();
+            });
         });
+
+
+        $.fn.dataTableExt.afnFiltering.push(
+            function(oSettings, aData, iDataIndex) {
+                if (typeof aData._date == 'undefined') {
+                    aData._date = new Date(aData[2]).getTime();
+                }
+
+                if (minDateFilter && !isNaN(minDateFilter)) {
+                    if (aData._date < minDateFilter) {
+                        return false;
+                    }
+                }
+
+                if (maxDateFilter && !isNaN(maxDateFilter)) {
+                    if (aData._date > maxDateFilter) {
+                        return false;
+                    }
+                }
+
+                return true;
+            }
+        );
     </script>
 </head>
 
@@ -221,7 +283,7 @@ function updateBalance(PDO $pdo, $referenceID)
         </div>
 
         <div class="p-2">
-            <a><img class="calendar-icon" src="images/calendar.png" style="width:30px; margin-right: 10px" alt="Calendar" data-toggle="modal" data-target="#modalCalendar"></a>
+            <a><img class="calendar-icon" src="images/calendar.png" style="width:30px; margin-right: 10px" alt="Calendar" data-toggle="modal" data-target="#modalCalendar" data-backdrop="false" id="iconCalendar"></a>
             <a class="btn btn-primary" href="journal_entry" role="button">Add journal entry</a>
         </div>
     </div>
@@ -271,7 +333,16 @@ function updateBalance(PDO $pdo, $referenceID)
 
 
                             ?></td>
-                        <td><?php echo htmlspecialchars($rowAssets['dateCreated']); ?></td>
+                        <td><?php
+
+
+                            $date = $rowAssets['dateCreated'];
+                            $newdate = date('m/d/Y', strtotime($date));
+                            echo htmlspecialchars($newdate);
+
+
+
+                        ?></td>
 
                         <td><?php
                             $stmt = $pdo->prepare('SELECT firstname, lastname FROM account WHERE id=:id');
@@ -361,7 +432,7 @@ function updateBalance(PDO $pdo, $referenceID)
 </div>
 
 <!-- Calendar modal -->
-<div class="modal fade bg-dark" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+<div class="modal fade" id="modalCalendar" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-md" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -371,27 +442,27 @@ function updateBalance(PDO $pdo, $referenceID)
                 </button>
             </div>
             <div class="modal-body bg-light">
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col-sm-3">
-                            <label for="from" >From</label>
-                        </div>
-                        <div class="col-md">
-                            <input type="date" class="form-control" id="from"/>
-                        </div>
-                    </div>
-
+                <form>
                     <div class="form-group">
-                        <div class="row" style="margin-top: 15px">
+                        <div class="row">
                             <div class="col-sm-3">
-                                <label for="to">To</label>
+                                <label for="from" >From</label>
                             </div>
                             <div class="col-md">
-                                <input type="date" class="form-control" id="to"/>
+                                <input type="text" class="form-control" id="from"/>
                             </div>
                         </div>
-                    </div>
 
+                        <div class="form-group">
+                            <div class="row" style="margin-top: 15px">
+                                <div class="col-sm-3">
+                                    <label for="to">To</label>
+                                </div>
+                                <div class="col-md">
+                                    <input type="text" class="form-control" id="to"/>
+                                </div>
+                            </div>
+                        </div>
                     <div class="form-group">
                         <div class="row" style="margin-top: 15px">
                             <div class="form-check">
@@ -408,8 +479,9 @@ function updateBalance(PDO $pdo, $referenceID)
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
-                    <button type="button" class="btn btn-primary">Save</button>
+                    <button type="button" class="btn btn-primary" id="calendar_submit">Update Table</button>
                 </div>
+                </form>
             </div>
         </div>
     </div>
