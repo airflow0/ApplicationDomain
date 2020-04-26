@@ -154,17 +154,21 @@ function updateBalance(PDO $pdo, $referenceID)
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.36/vfs_fonts.js"></script>
     <script type="text/javascript" src="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.js"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs4/jszip-2.5.0/dt-1.10.20/af-2.3.4/b-1.6.1/b-colvis-1.6.1/b-flash-1.6.1/b-html5-1.6.1/b-print-1.6.1/cr-1.5.2/fc-3.3.0/fh-3.1.6/kt-2.5.1/r-2.2.3/rg-1.1.1/rr-1.2.6/sc-2.0.1/sp-1.0.1/sl-1.3.1/datatables.min.css"/>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
-    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.1.3/css/bootstrap.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.20/css/dataTables.bootstrap4.min.css">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.6.4/js/bootstrap-datepicker.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/dataTables.buttons.min.js"></script>
+    <script src="https://cdn.datatables.net/buttons/1.6.1/js/buttons.print.min.js"></script>
 
     <title>CountOnUs - Journal Entry</title>
     <script type="text/javascript">
         $(document).ready(function () {
-            var table = $('#journal-table-view').DataTable()
-            $("#journal-table-view_wrapper > .dt-buttons").appendTo("div.p-2");
+            var table = $('#journal-table-view').DataTable( {
+                buttons: [
+                    'print'
+                ]
+            });
+            table.buttons().container().appendTo('#print_button');
+
             var referenceID = '<?php echo $referenceID ?>';
             $('#journal-table-view tbody').on('click', 'tr', function () {
                 if ($(this).hasClass('selected')) {
@@ -188,7 +192,7 @@ function updateBalance(PDO $pdo, $referenceID)
                         data :{type:type,rowCount:rowCount, accountID: accountID, debit:debit, credit:credit, addDescription: addDescription, referenceID: referenceID},
                         success(data)
                         {
-                            alert(data);
+
                             $('#modalAddLine').hide();
                             location.reload();
                         }
@@ -220,7 +224,6 @@ function updateBalance(PDO $pdo, $referenceID)
                 var credit = $('#modalEditLine #credit').val();
                 var addDescription = $('#modalEditLine #editDescription').val();
                 var type = "editLine";
-                alert(rowCount + ' ' + accountname);
                 $.ajax(
                     {
                         url: 'post/journal_post',
@@ -263,6 +266,16 @@ function updateBalance(PDO $pdo, $referenceID)
                     alert('You must select a row in the table before modification!');
                 }
             });
+            $('#submit_entry').click(function() {
+               var balance = $('#balanceID').text();
+               var newBalance = balance.replace(/[^0-9\.-]/g, '');
+               if(newBalance > 0 || newBalance < 0)
+               {
+                   var r = confirm("You have an outstanding balance, if you decide to proceed the journal will be automatically reject!")
+               }
+
+            });
+
         });
     </script>
 
@@ -271,7 +284,7 @@ function updateBalance(PDO $pdo, $referenceID)
 <body>
 
 <div class="body-format" style="padding: 20px; color: #FFFFFF">
-    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px">Current Balance: <?php
+    <h1 style="text-align: left; font-size: 26px; padding-bottom: 5px" id="balanceID">Current Balance: <?php
         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
         echo $fmt->formatCurrency($balance, "USD")."\n";
         ?>
@@ -327,6 +340,9 @@ function updateBalance(PDO $pdo, $referenceID)
             <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modalAddLine">Add line</button>
             <button type="button" class="btn btn-secondary" data-toggle="modal" id="editLine">Edit line</button>
             <button type="button" class="btn btn-secondary" data-toggle="modal" id="deleteLine">Delete line</button>
+            <span id="print_button"></span>
+
+
 
         </div>
     </div>
@@ -345,7 +361,7 @@ function updateBalance(PDO $pdo, $referenceID)
     <div class="d-flex justify-content-end" style="padding-top: 5px; padding-bottom: 18px">
         <div class="p-2">
             <a class="btn btn-secondary" href="#" role="button">Cancel</a>
-            <a class="btn btn-primary" href="#" role="button">Submit Entry</a>
+            <a class="btn btn-primary" href="#" role="button" id="submit_entry">Submit Entry</a>
         </div>
     </div>
 </div>

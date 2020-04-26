@@ -29,6 +29,9 @@ if($_POST['type'] == 'addLine') {
     $stmt->bindValue(":referenceID", $referenceID);
     $stmt->execute();
 
+
+
+
     echo "Success!";
 
 
