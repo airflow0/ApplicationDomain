@@ -32,6 +32,11 @@ $journal_data->bindValue(":referenceID", $referenceID);
 $journal_data->execute();
 $journal_data->setFetchMode(PDO::FETCH_ASSOC);
 
+$attachment_data = $pdo->prepare('SELECT attachmentURL, attachmentName FROM attachments WHERE referenceID=:referenceID');
+$attachment_data->bindValue(":referenceID", $referenceID);
+$attachment_data->execute();
+$attachment_data->setFetchMode(PDO::FETCH_ASSOC);
+
 $journal_date = $pdo->prepare('SELECT dateCreated FROM journal WHERE referenceID=:referenceID');
 $journal_date->bindValue(":referenceID", $referenceID);
 $journal_date->execute();
@@ -288,6 +293,29 @@ function updateBalance(PDO $pdo, $referenceID)
 
             });
 
+            $("#inputAttachment").change(function(){
+                var form_data = new FormData();
+                var file_data = $('#inputAttachment')[0].files[0];
+                form_data.append('file', file_data);
+                form_data.append('file_name', file_data.name);
+                form_data.append('referenceID', referenceID);
+                $.ajax(
+                    {
+                        url: 'post/attachmentPost',
+                        dataType: 'text',  // what to expect back from the PHP script, if anything
+                        cache: false,
+                        contentType: false,
+                        processData: false,
+                        method: 'post',
+                        data :form_data,
+                        success: function(php_script_response){
+                            alert(php_script_response); // display response from the PHP script, if any
+                            location.reload();
+                        }
+                    }
+                );
+            });
+
         });
     </script>
 
@@ -358,7 +386,26 @@ function updateBalance(PDO $pdo, $referenceID)
 
         </div>
     </div>
-
+    <div class="border border-secondary rounded bg-dark">
+        <div style="padding: 10px">
+            <table id="attachmentTable" class="table hover table-striped table-bordered table-dark" style="width: 100%">
+                <thead>
+                <tr>
+                    <th>Attachment URL</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                while ($rowAssets = $attachment_data->fetch()): ?>
+                    <tr>
+                        <td><a href="<?php echo $rowAssets['attachmentURL']; ?>"><?php echo htmlspecialchars($rowAssets['attachmentName']); ?></a></td>
+                    </tr>
+                <?php  endwhile; ?>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <p></p>
     <!--Input for attachments-->
     <div class="input-group mb-3" style="padding-left: 5px; padding-right: 5px">
         <div class="input-group-prepend">

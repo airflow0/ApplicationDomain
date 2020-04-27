@@ -70,15 +70,13 @@ $picture = $userinfo['picture_directory'];
 
             <?php
 
-            if($admin == "1")
-            {
-                echo "<li class=\"nav-item\" style=\"margin-left: 30px; margin-right: 30px;\">
-                <a class=\"nav-link nav-hover-link\" href=\"admin_user_table\">User Management</a>
-            </li>";
-            }
-            else
-            {
-
+            if($_SESSION['isAdmin'] || $_SESSION['isManager']) {
+                echo '';
+                ?>
+                <li class="nav-item" style="margin-left: 30px; margin-right: 30px;">
+                    <a class="nav-link nav-hover-link" href="admin_user_table">User Management</a>
+                </li>
+                <?php
             }
             ?>
 
