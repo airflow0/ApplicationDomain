@@ -154,7 +154,7 @@ function division($a, $b) {
         </div>
 
         <div class="p-2">
-            <h1 style="text-align: left; font-size: 26px">Company AAA</h1>
+            <h1 style="text-align: left; font-size: 26px">Edelweiss Corporation</h1>
         </div>
     </div>
     <div class="row" style="padding:10px; color: black">
