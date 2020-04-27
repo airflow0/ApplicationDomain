@@ -290,7 +290,11 @@ function updateBalance(PDO $pdo, $referenceID)
                     <th>NAME</th>
                     <th>BALANCE</th>
                     <th>STATUS</th>
+                    <?php
+                    if($_SESSION['isAdmin'])
+                    { ?>
                     <th style="width:9%"></th>
+                    <?php  }?>
                 </tr>
                 </thead>
 
@@ -371,11 +375,15 @@ function updateBalance(PDO $pdo, $referenceID)
 
 
                             ?></td>
+                        <?php
+                            if($_SESSION['isAdmin'])
+                            { ?>
                         <td>
                             <button type="button" class="btn btn-secondary" data-toggle="modal"
                                     id="status">Update status
                             </button>
                         </td>
+                        <?php  }?>
                     </tr>
                 <?php  endwhile; ?>
                 </tbody>

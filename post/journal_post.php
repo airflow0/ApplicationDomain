@@ -1,5 +1,9 @@
 <?php
 require("../database.php");
+$date = date("Y-m-d", time());
+$time_ = date("H:i:s", time());
+$clientID = $_SESSION['userid'];
+
 if($_POST['type'] == 'addLine') {
     $rowCount = $_POST['rowCount'];
     $accountID = $_POST['accountID'];
@@ -8,6 +12,8 @@ if($_POST['type'] == 'addLine') {
     $addDescription = $_POST['addDescription'];
     $referenceID = $_POST['referenceID'];
     $accountType = $accountID[0];
+
+
 
     $stmt = $pdo->prepare("SELECT accName from accountnames where accID=:accID");
     $stmt->bindValue(":accID", $accountID);
@@ -29,7 +35,21 @@ if($_POST['type'] == 'addLine') {
     $stmt->bindValue(":referenceID", $referenceID);
     $stmt->execute();
 
+    $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+    $stmt->bindValue(":id", $clientID);
+    $stmt->execute();
+    $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $userInfo['firstname'].' '.$userInfo['lastname'];
 
+    $logDesc = $name . ' created a journal data with a reference ID: '.$referenceID. ' on '.$date;
+
+    $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+    $stmt->bindValue(':accID', $accountID);
+    $stmt->bindValue(':modifiedBy', $clientID);
+    $stmt->bindValue(':dateModified', $date);
+    $stmt->bindValue(':time', $time_);
+    $stmt->bindValue(':details', $logDesc);
+    $stmt->execute();
 
 
     echo "Success!";
@@ -66,6 +86,23 @@ if($_POST['type'] == 'editLine')
     $stmt->bindValue(":credit", $addCredit);
     $stmt->bindValue(":referenceID", $referenceID);
     $stmt->execute();
+
+    $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+    $stmt->bindValue(":id", $clientID);
+    $stmt->execute();
+    $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+
+    $logDesc = $name . ' edited a journal data with a reference ID: '.$referenceID. ' on '.$date;
+
+    $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+    $stmt->bindValue(':accID', $accountID);
+    $stmt->bindValue(':modifiedBy', $clientID);
+    $stmt->bindValue(':dateModified', $date);
+    $stmt->bindValue(':time', $time_);
+    $stmt->bindValue(':details', $logDesc);
+    $stmt->execute();
+
     echo 'Success!';
 
 }
@@ -77,6 +114,23 @@ if($_POST['type'] == 'deleteLine')
     $stmt->bindValue(":journalID", $rowCount);
     $stmt->bindValue(":referenceID", $referenceID);
     $stmt->execute();
+
+    $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+    $stmt->bindValue(":id", $clientID);
+    $stmt->execute();
+    $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+    $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+
+    $logDesc = $name . ' deleted a journal data with a reference ID: '.$referenceID. ' on '.$date;
+
+    $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+    $stmt->bindValue(':accID', $accountID);
+    $stmt->bindValue(':modifiedBy', $clientID);
+    $stmt->bindValue(':dateModified', $date);
+    $stmt->bindValue(':time', $time_);
+    $stmt->bindValue(':details', $logDesc);
+    $stmt->execute();
+
     echo "Successfull deleted!";
 }
 ?>

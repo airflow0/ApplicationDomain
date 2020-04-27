@@ -229,8 +229,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
         <table id="account_table" class="table hover table-bordered table-striped table-dark">
             <thead>
             <tr>
-                <th scope="col">ACCOUNT NAME</th>
                 <th scope="col">ACCOUNT ID</th>
+                <th scope="col">ACCOUNT NAME</th>
                 <th scope="col">DESCRIPTION</th>
                 <th scope="col">ACCOUNT CATEGORY</th>
                 <th scope="col">DATE/TIME ADDED</th>
@@ -241,8 +241,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             while ($rowAssets = $asset->fetch()):
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
                     <td>Asset</td>
                     <td>
@@ -259,8 +259,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             while ($rowAssets = $liability->fetch()):
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
                     <td>Liability</td>
                     <td>
@@ -277,8 +277,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             while ($rowAssets = $equity->fetch()):
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
                     <td>Equity</td>
                     <td>
@@ -295,8 +295,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             while ($rowAssets = $revenue->fetch()):
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
                     <td>Revenue</td>
                     <td>
@@ -313,8 +313,8 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             while ($rowAssets = $expenses->fetch()):
                 ?>
                 <tr>
-                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['accID']) ?></td>
+                    <td><?php echo htmlspecialchars($rowAssets['accName']) ?></td>
                     <td><?php echo htmlspecialchars($rowAssets['description']) ?></td>
                     <td>Expenses</td>
                     <td>

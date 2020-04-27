@@ -3,6 +3,8 @@ require('../database.php');
 if(isset($_POST['accountname']))
 {
     $time = date("Y-m-d H:i:s", time());
+    $date = date("Y-m-d", time());
+    $time_ = date("H:i:s", time()); // 3 Days
     $clientID = $_SESSION['userid'];
     $accountName = trim($_POST['accountname']);
     $description = $_POST['description'];
@@ -36,7 +38,25 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
+
+            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+            $stmt->bindValue(":id", $clientID);
+            $stmt->execute();
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+            $logDesc = $name . ' created an account called '.$accountName. ' on '.$date;
+
+            $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+            $stmt->bindValue(':accID', $accID);
+            $stmt->bindValue(':modifiedBy', $clientID);
+            $stmt->bindValue(':dateModified', $date);
+            $stmt->bindValue(':time', $time_);
+            $stmt->bindValue(':details', $logDesc);
+            $stmt->execute();
             echo 'Account has been successfully added!';
+
+
+
 
         }
         else if ($_POST['category'] == 2)
@@ -60,6 +80,22 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
+
+            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+            $stmt->bindValue(":id", $clientID);
+            $stmt->execute();
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+            $logDesc = $name . ' created an account called '.$accountName. ' on '.$date;
+
+            $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+            $stmt->bindValue(':accID', $accID);
+            $stmt->bindValue(':modifiedBy', $clientID);
+            $stmt->bindValue(':dateModified', $date);
+            $stmt->bindValue(':time', $time_);
+            $stmt->bindValue(':details', $logDesc);
+            $stmt->execute();
+
             echo 'Account has been successfully added!';
 
 
@@ -85,6 +121,22 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
+
+            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+            $stmt->bindValue(":id", $clientID);
+            $stmt->execute();
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+            $logDesc = $name . ' created an account called '.$accountName. ' on '.$date;
+
+            $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+            $stmt->bindValue(':accID', $accID);
+            $stmt->bindValue(':modifiedBy', $clientID);
+            $stmt->bindValue(':dateModified', $date);
+            $stmt->bindValue(':time', $time_);
+            $stmt->bindValue(':details', $logDesc);
+            $stmt->execute();
+
             echo 'Account has been successfully added!';
         }
         else if ($_POST['category'] == 4)
@@ -108,6 +160,22 @@ if(isset($_POST['accountname']))
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
             $stmt->execute();
+
+            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+            $stmt->bindValue(":id", $clientID);
+            $stmt->execute();
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+            $logDesc = $name . ' created an account called '.$accountName. ' on '.$date;
+
+            $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+            $stmt->bindValue(':accID', $accID);
+            $stmt->bindValue(':modifiedBy', $clientID);
+            $stmt->bindValue(':dateModified', $date);
+            $stmt->bindValue(':time', $time_);
+            $stmt->bindValue(':details', $logDesc);
+            $stmt->execute();
+
             echo 'Account has been successfully added!';
         }
         else if ($_POST['category'] == 5)
@@ -130,6 +198,21 @@ if(isset($_POST['accountname']))
             $stmt = $pdo->prepare("INSERT into accountnames(accName, accID, accountType) values (:accName, :accID, 5)");
             $stmt->bindValue(':accName', $accountName);
             $stmt->bindValue(':accID', $accID);
+            $stmt->execute();
+
+            $stmt = $pdo->prepare('SELECT firstname, lastname FROM account where id=:id');
+            $stmt->bindValue(":id", $clientID);
+            $stmt->execute();
+            $userInfo = $stmt->fetch(PDO::FETCH_ASSOC);
+            $name = $userInfo['firstname'].' '.$userInfo['lastname'];
+            $logDesc = $name . ' created an account called '.$accountName. ' on '.$date;
+
+            $stmt = $pdo->prepare('INSERT into eventlog(accID, modifiedBy, dateModified, time, details) values (:accID, :modifiedBy, :dateModified, :time, :details)');
+            $stmt->bindValue(':accID', $accID);
+            $stmt->bindValue(':modifiedBy', $clientID);
+            $stmt->bindValue(':dateModified', $date);
+            $stmt->bindValue(':time', $time_);
+            $stmt->bindValue(':details', $logDesc);
             $stmt->execute();
             echo 'Account has been successfully added!';
         }

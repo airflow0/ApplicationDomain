@@ -33,31 +33,7 @@ while ($revenue = $rev->fetch(PDO::FETCH_ASSOC)) {
     }
     array_push($rev_array, $rev_balance);
 }
-
-print_r(array_sum($rev_array));
-
-$exp = $pdo->prepare('SELECT accID, accName FROM expenses');
-$exp->execute();
-$exp_array = [];
-while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
-    $exp_balance = 0;
-    $stmt = $pdo->prepare('SELECT * FROM journal_data where accID=:accID');
-    $stmt->bindValue('accID', $expense['accID']);
-    $stmt->execute();
-    while ($exp_data = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        $exp_debit = preg_replace('/[^\d,\.]/', '', $exp_data['debit']);
-        $exp_debit = str_replace(',', '', $exp_debit);
-        if ($exp_debit != null) {
-            $exp_balance = $exp_balance + $exp_debit;
-        }
-        $exp_credit = preg_replace('/[^\d,\.]/', '', $exp_data['credit']);
-        $exp_credit = str_replace(',', '', $exp_credit);
-        if ($rev_credit != null) {
-            $exp_balance = $exp_balance - $exp_credit;
-        }
-    }
-    array_push($exp_array, $exp_balance);
-}
+$rev_sum = array_sum($rev_array);
 
 
 
@@ -97,15 +73,21 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
                 <tbody>
                 <tr>
                     <th style="width: 65%" scope="row">INITIAL RETAINED EARNINGS</th>
-                    <td>0.00</td>
+                    <td>$0.00</td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">ADD: NET INCOME</th>
-                    <td>$600.00</td>
+                    <td><?php
+                        $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+                        echo $fmt->formatCurrency($rev_sum, "USD") . "\n";
+                        ?> </td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">TOTAL</th>
-                    <td>$600.00</td>
+                    <td><?php
+                        $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+                        echo $fmt->formatCurrency($rev_sum, "USD") . "\n";
+                        ?> </td>
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">LESS: DIVIDENDS</th>
@@ -113,7 +95,10 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
                 </tr>
                 <tr>
                     <th style="width: 65%" scope="row">RETAINED EARNINGS</th>
-                    <td>$600.00</td>
+                    <td><?php
+                        $fmt = new NumberFormatter('en_US', NumberFormatter::CURRENCY);
+                        echo $fmt->formatCurrency($rev_sum, "USD") . "\n";
+                        ?> </td>
                 </tr>
 
                 </tbody>
@@ -122,7 +107,7 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
     </div>
 
 </div>
-
+<button type="button" class="btn btn-secondary" style="margin-left:20px;" onclick="window.print()">Print</button>
 </body>
 
 </html>
