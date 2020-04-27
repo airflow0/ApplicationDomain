@@ -15,6 +15,130 @@ $l_display = $userinfo['lastname'];
 $d_display = $userinfo['dateofbirth'];
 $a_display = $userinfo['address'];
 $picture = $userinfo['picture_directory'];
+
+
+$event = $pdo->prepare('SELECT details from eventlog');
+$event->execute();
+$event->setFetchMode(PDO::FETCH_ASSOC);
+
+
+$accIDS = $pdo->prepare("SELECT accID FROM assets");
+$accIDS->execute();
+$accIDS->setFetchMode(PDO::FETCH_ASSOC);
+
+$count = 0;
+$balance_array = [];
+while($accounts = $accIDS->fetch())
+{
+    $balance = 0;
+    $balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $balance_troll->bindValue(":accID", $accounts['accID']);
+    $balance_troll->execute();
+    $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $balance_troll->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        if($debit_money != null)
+        {
+            $balance = $balance + $debit_money;
+        }
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($credit_money != null)
+        {
+            $balance = $balance - $credit_money;
+        }
+    }
+    array_push($balance_array, $balance);
+}
+
+
+$liability_accIDS = $pdo->prepare("SELECT accID FROM liability");
+$liability_accIDS->execute();
+$liability_accIDS->setFetchMode(PDO::FETCH_ASSOC);
+
+$count = 0;
+$lia_balance_array = [];
+while($li_accounts = $liability_accIDS->fetch())
+{
+    $li_balance = 0;
+    $li_balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $li_balance_troll->bindValue(":accID", $li_accounts['accID']);
+    $li_balance_troll->execute();
+    $li_balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($li_transaction = $li_balance_troll->fetch())
+    {
+        $li_debit_money = preg_replace('/[^\d,\.]/', '', $li_transaction['debit']);
+        $li_debit_money = str_replace(',', '', $li_debit_money);
+        if($li_debit_money != null)
+        {
+            $li_balance = $li_balance - $li_debit_money;
+        }
+        $li_credit_money = preg_replace('/[^\d,\.]/', '', $li_transaction['credit']);
+        $li_credit_money = str_replace(',', '', $li_credit_money);
+        if($li_credit_money != null)
+        {
+            $li_balance = $li_balance + $li_credit_money;
+        }
+
+    }
+    array_push($lia_balance_array, $li_balance);
+}
+
+$equity_accIDS = $pdo->prepare("SELECT accID FROM equity");
+$equity_accIDS->execute();
+$equity_accIDS->setFetchMode(PDO::FETCH_ASSOC);
+
+$count = 0;
+$eq_balance_array = [];
+while($accounts = $equity_accIDS->fetch())
+{
+    $balance = 0;
+    $balance_troll = $pdo->prepare("SELECT * FROM journal_data WHERE accID=:accID");
+    $balance_troll->bindValue(":accID", $accounts['accID']);
+    $balance_troll->execute();
+    $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+    while($transaction = $balance_troll->fetch())
+    {
+        $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
+        $debit_money = str_replace(',', '', $debit_money);
+        if($debit_money != null)
+        {
+            $balance = $balance - $debit_money;
+        }
+        $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
+        $credit_money = str_replace(',', '', $credit_money);
+        if($credit_money != null)
+        {
+            $balance = $balance + $credit_money;
+        }
+
+    }
+    array_push($eq_balance_array, $balance);
+}
+
+$asset_sum = array_sum($balance_array);
+$lia_sum = array_sum($lia_balance_array);
+$eq_sum = array_sum($eq_balance_array);
+
+
+$currentRatio = division($asset_sum,$lia_sum);
+$assetToRation = division($asset_sum,$eq_sum);
+$debtToAssets = division($lia_sum,$asset_sum);
+
+$C_format = number_format((float) $currentRatio, 2, '.', '');
+$atR_format = number_format((float) $assetToRation, 2, '.', '');
+$dtoA = number_format((float) $debtToAssets, 2, '.', '');
+
+
+function division($a, $b) {
+    $c = @(a/b);
+    if($b === 0) {
+        $c = 0;
+    }
+    return $c;
+}
 ?>
 
 <!DOCTYPE html>
@@ -51,24 +175,23 @@ $picture = $userinfo['picture_directory'];
             <div class="card bg-dark text-white" style="margin-top: 30px">
                 <div class="card-body">
                     <h5 class="card-title">Important Messages</h5>
-                    <div class="alert alert-secondary" role="alert">
-                        <a href="#" class="alert-link">Pending journal entry</a> created by user Tanner Johnson.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="alert alert-secondary" role="alert">
-                        <a href="#" class="alert-link">Pending journal entry</a> created by user James Lee.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="alert alert-secondary" role="alert">
-                        <a href="#" class="alert-link">Brianna Howard</a> has now been added as a user.
-                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
+                    <?php
+                    while($eventdetails = $event->fetch())
+                    {
+
+                        ?>
+                        <div class="alert alert-secondary" role="alert">
+                            <?php echo $eventdetails['details']; ?>
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+
+
+                        <?php
+                    }
+                    ?>
+
                 </div>
             </div>
         </div>
@@ -82,21 +205,21 @@ $picture = $userinfo['picture_directory'];
                         <div class="p-2 rounded" style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Current Ratio</b></h3>
-                                <h1 style="text-align: center; font-size:100px"><b>1.54</b></h1>
+                                <h1 style="text-align: center; font-size:100px"><b><?php echo $C_format; ?></b></h1>
                                 <p style="text-align: center; font-size: 20px">Current Ratio = Assets / Liabilities</p>
                             </div>
                         </div>
                         <div class="p-2 rounded" style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Asset-to-Equity</b></h3>
-                                <h1 style="text-align: center; font-size:100px"><b>1.25</b></h1>
+                                <h1 style="text-align: center; font-size:100px"><b><?php echo $atR_format; ?></b></h1>
                                 <p style="text-align: center; font-size: 20px">Asset-to-Equity = Assets / Equity</p>
                             </div>
                         </div>
                         <div class="p-2 rounded" style="background-color: rgba(253, 233, 47, 0.623); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Debt-to-Assets</b></h3>
-                                <h1 style="text-align: center; font-size:100px"><b>0.65</b></h1>
+                                <h1 style="text-align: center; font-size:100px"><b><?php echo $dtoA; ?></b></h1>
                                 <p style="text-align: center; font-size: 20px">Debt-to-Assets = Liabilities / Assets</p>
                             </div>
                         </div>

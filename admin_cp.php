@@ -120,14 +120,20 @@ $asset_sum = array_sum($balance_array);
 $lia_sum = array_sum($lia_balance_array);
 $eq_sum = array_sum($eq_balance_array);
 
-$currentRatio = $asset_sum/$lia_sum;
-$assetToRation = $asset_sum/$eq_sum;
-$debtToAssets = $lia_sum/$asset_sum;
+$currentRatio = division($asset_sum,$lia_sum);
+$assetToRation = division($asset_sum,$eq_sum);
+$debtToAssets = division($lia_sum,$asset_sum);
 
 $C_format = number_format((float) $currentRatio, 2, '.', '');
 $atR_format = number_format((float) $assetToRation, 2, '.', '');
 $dtoA = number_format((float) $debtToAssets, 2, '.', '');
-
+function division($a, $b) {
+    $c = @(a/b);
+    if($b === 0) {
+        $c = 0;
+    }
+    return $c;
+}
 ?>
 
 <!DOCTYPE html>
