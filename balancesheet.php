@@ -20,6 +20,7 @@ while($accounts = $accIDS->fetch())
     $balance_troll->bindValue(":accID", $accounts['accID']);
     $balance_troll->execute();
     $balance_troll->setFetchMode(PDO::FETCH_ASSOC);
+
     while($transaction = $balance_troll->fetch())
     {
         $debit_money = preg_replace('/[^\d,\.]/', '', $transaction['debit']);
@@ -223,7 +224,6 @@ while($accounts = $equity_accIDS->fetch())
 
                 </tbody>
             </table>
-
             <table id="equity-table" class="table table-striped table-bordered table-dark" style="width: 100%">
                 <tbody>
                 <tr>
@@ -278,18 +278,14 @@ while($accounts = $equity_accIDS->fetch())
                         echo $fmt->formatCurrency($lia_total + $equity_total, "USD")."\n";
 
                         ?>
-
-
-
                     </td>
                 </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
 </div>
-
+<button type="button" class="btn btn-secondary" style="margin-left:20px;" onclick="window.print()">Print</button>
 </body>
 
 </html>

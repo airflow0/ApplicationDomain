@@ -107,7 +107,7 @@ $rev_sum = array_sum($rev_array);
     </div>
 
 </div>
-
+<button type="button" class="btn btn-secondary" style="margin-left:20px;" onclick="window.print()">Print</button>
 </body>
 
 </html>
