@@ -120,6 +120,7 @@ $asset_sum = array_sum($balance_array);
 $lia_sum = array_sum($lia_balance_array);
 $eq_sum = array_sum($eq_balance_array);
 
+
 $currentRatio = division($asset_sum,$lia_sum);
 $assetToRation = division($asset_sum,$eq_sum);
 $debtToAssets = division($lia_sum,$asset_sum);
@@ -127,6 +128,8 @@ $debtToAssets = division($lia_sum,$asset_sum);
 $C_format = number_format((float) $currentRatio, 2, '.', '');
 $atR_format = number_format((float) $assetToRation, 2, '.', '');
 $dtoA = number_format((float) $debtToAssets, 2, '.', '');
+
+
 function division($a, $b) {
     $c = @(a/b);
     if($b === 0) {
@@ -171,9 +174,13 @@ function division($a, $b) {
                 <div class="card-body">
                     <h5 class="card-title">Important Messages</h5>
                     <?php
+                        $i = 0;
                         while($eventdetails = $event->fetch())
                         {
-
+                            if($i >= 10)
+                            {
+                                break;
+                            }
                         ?>
                         <div class="alert alert-secondary" role="alert">
                             <?php echo $eventdetails['details']; ?>
@@ -184,6 +191,7 @@ function division($a, $b) {
 
 
                         <?php
+                            $i++;
                         }
                     ?>
 

@@ -59,13 +59,13 @@ while($li_accounts = $liability_accIDS->fetch())
         $li_debit_money = str_replace(',', '', $li_debit_money);
         if($li_debit_money != null)
         {
-            $li_balance = $li_balance - $li_debit_money;
+            $li_balance = $li_balance + $li_debit_money;
         }
         $li_credit_money = preg_replace('/[^\d,\.]/', '', $li_transaction['credit']);
         $li_credit_money = str_replace(',', '', $li_credit_money);
         if($li_credit_money != null)
         {
-            $li_balance = $li_balance + $li_credit_money;
+            $li_balance = $li_balance - $li_credit_money;
         }
 
     }
@@ -91,13 +91,13 @@ while($accounts = $equity_accIDS->fetch())
         $debit_money = str_replace(',', '', $debit_money);
         if($debit_money != null)
         {
-            $balance = $balance - $debit_money;
+            $balance = $balance + $debit_money;
         }
         $credit_money = preg_replace('/[^\d,\.]/', '', $transaction['credit']);
         $credit_money = str_replace(',', '', $credit_money);
         if($credit_money != null)
         {
-            $balance = $balance + $credit_money;
+            $balance = $balance - $credit_money;
         }
 
     }

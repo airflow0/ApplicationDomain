@@ -176,9 +176,13 @@ function division($a, $b) {
                 <div class="card-body">
                     <h5 class="card-title">Important Messages</h5>
                     <?php
+                    $i = 0;
                     while($eventdetails = $event->fetch())
                     {
-
+                        if($i >= 10)
+                        {
+                            break;
+                        }
                         ?>
                         <div class="alert alert-secondary" role="alert">
                             <?php echo $eventdetails['details']; ?>
@@ -189,6 +193,7 @@ function division($a, $b) {
 
 
                         <?php
+                        $i++;
                     }
                     ?>
 
