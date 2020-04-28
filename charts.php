@@ -46,7 +46,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 if(table.row('.selected').any())
                 {
                     var data = table.row('.selected').data();
-                    var url = 'eventlog?accountname=' +data[0] +'&accountid='+data[1];
+                    var url = 'eventlog?accountname=' +data[1] +'&accountid='+data[0];
                     $(location).attr('href',url);
 
                 }
@@ -57,7 +57,7 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
             });
             $('#account_table tbody').on('dblclick', 'tr', function () {
                 var data = table.row( this ).data();
-                var url = 'ledger?accountname=' +data[0] +'&accountid='+data[1] +'&category='+ data[3];
+                var url = 'ledger?accountname=' +data[1] +'&accountid='+data[0] +'&category='+ data[3];
                 $(location).attr('href',url);
             } );
 
@@ -67,9 +67,9 @@ $revenue->setFetchMode(PDO::FETCH_ASSOC);
                 if( table.rows('.selected').any())
                 {
                     var data = table.row('.selected').data();
-                    if(window.confirm("Do you really want to delete the account " + data[0] + ", Category data: " + data[3]))
+                    if(window.confirm("Do you really want to delete the account " + data[1] + ", Category data: " + data[3]))
                     {
-                        var account_name = data[0];
+                        var account_name = data[1];
                         var category = data[3];
                         $.ajax({
                             url: 'post/deleteAccountPost',

@@ -21,12 +21,12 @@ while ($revenue = $rev->fetch(PDO::FETCH_ASSOC)) {
         $rev_debit = preg_replace('/[^\d,\.]/', '', $rev_data['debit']);
         $rev_debit = str_replace(',', '', $rev_debit);
         if ($rev_debit != null) {
-            $rev_balance = $rev_balance + $rev_debit;
+            $rev_balance = $rev_balance - $rev_debit;
         }
         $rev_credit = preg_replace('/[^\d,\.]/', '', $rev_data['credit']);
         $rev_credit = str_replace(',', '', $rev_credit);
         if ($rev_credit != null) {
-            $rev_balance = $rev_balance - $rev_credit;
+            $rev_balance = $rev_balance + $rev_credit;
         }
 
     }
@@ -185,7 +185,7 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
                     <th style="width: 75%" scope="row">NET INCOME:</th>
                     <td><?php
                         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
-                        echo $fmt->formatCurrency($rev_total + $exp_total, "USD")."\n";
+                        echo $fmt->formatCurrency($rev_total - $exp_total, "USD")."\n";
                         ?>
                     </td>
                 </tr>

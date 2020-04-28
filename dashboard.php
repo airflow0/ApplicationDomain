@@ -73,13 +73,13 @@ while($li_accounts = $liability_accIDS->fetch())
         $li_debit_money = str_replace(',', '', $li_debit_money);
         if($li_debit_money != null)
         {
-            $li_balance = $li_balance - $li_debit_money;
+            $li_balance = $li_balance + $li_debit_money;
         }
         $li_credit_money = preg_replace('/[^\d,\.]/', '', $li_transaction['credit']);
         $li_credit_money = str_replace(',', '', $li_credit_money);
         if($li_credit_money != null)
         {
-            $li_balance = $li_balance + $li_credit_money;
+            $li_balance = $li_balance - $li_credit_money;
         }
 
     }
@@ -121,24 +121,35 @@ while($accounts = $equity_accIDS->fetch())
 $asset_sum = array_sum($balance_array);
 $lia_sum = array_sum($lia_balance_array);
 $eq_sum = array_sum($eq_balance_array);
-
-
-$currentRatio = division($asset_sum,$lia_sum);
-$assetToRation = division($asset_sum,$eq_sum);
-$debtToAssets = division($lia_sum,$asset_sum);
+if($lia_sum == 0)
+{
+    $currentRatio = 0;
+}
+else
+{
+    $currentRatio = $asset_sum/$lia_sum;
+}
+if($eq_sum == 0)
+{
+    $assetToRation = 0;
+}
+else
+{
+    $assetToRation = $asset_sum/$lia_sum;
+}
+if($asset_sum == 0)
+{
+    $debtToAssets = 0;
+}
+else
+{
+    $debtToAssets = $asset_sum/$lia_sum;
+}
 
 $C_format = number_format((float) $currentRatio, 2, '.', '');
 $atR_format = number_format((float) $assetToRation, 2, '.', '');
 $dtoA = number_format((float) $debtToAssets, 2, '.', '');
 
-
-function division($a, $b) {
-    $c = @(a/b);
-    if($b === 0) {
-        $c = 0;
-    }
-    return $c;
-}
 ?>
 
 <!DOCTYPE html>
