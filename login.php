@@ -127,14 +127,14 @@ function updateLoginAttempt(PDO $pdo, $data, $email)
 ?>
 
 <head>
-    <title> Website name </title>
+    <title> CountOnUs - Accounting Software </title>
     <meta charset="UTF-8">
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
 
 
-        <img class="mx-auto d-block" src="images/logo-revised.png" style="width: 15%; padding: 20px">
+        <img class="mx-auto d-block" src="images/logo-revised.png" style="width: 300px; padding: 20px">
 
 
 <div class="loginContainer">
