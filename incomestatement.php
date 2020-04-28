@@ -185,7 +185,7 @@ while ($expense = $exp->fetch(PDO::FETCH_ASSOC)) {
                     <th style="width: 75%" scope="row">NET INCOME:</th>
                     <td><?php
                         $fmt = new NumberFormatter( 'en_US', NumberFormatter::CURRENCY );
-                        echo $fmt->formatCurrency($rev_total - $exp_total, "USD")."\n";
+                        echo $fmt->formatCurrency($rev_total + $exp_total, "USD")."\n";
                         ?>
                     </td>
                 </tr>
