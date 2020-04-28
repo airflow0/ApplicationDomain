@@ -158,6 +158,55 @@ $dtoA = number_format((float) $debtToAssets, 2, '.', '');
     <link rel="stylesheet" type="text/css" href="css/style.css">
 </head>
 <body>
+<script type="text/javascript">
+    $(document).ready(function () {
+            var cRatio = "<?php echo $C_format; ?>";
+            var  ATOE = "<?php echo $atR_format; ?>";
+            var DTOA = "<?php echo $dtoA; ?>";
+
+
+            if( cRatio >= 1.2)
+            {
+                $("#currentRatio").css("background-color","rgba(49, 199, 49, 0.568)");
+            }
+            else if ( cRatio < 1.2 && cRatio >= 0.8 )
+            {
+                $("#currentRatio").css("background-color","rgba(253, 233, 47, 0.623)");
+            }
+            else
+            {
+                $("#currentRatio").css("background-color","red");
+            }
+
+            if( ATOE >= 1.5)
+            {
+                $("#atoe").css("background-color","red");
+            }
+            else if ( ATOE < 1.5 && ATOE > 1)
+            {
+                $("#atoe").css("background-color","rgba(253, 233, 47, 0.623)");
+            }
+            else
+            {
+                $("#atoe").css("background-color","rgba(49, 199, 49, 0.568)");
+            }
+
+            if( DTOA >= 1.2)
+            {
+                $("#dtoa").css("background-color","red");
+            }
+            else if ( DTOA < 1.2 && DTOA > 1)
+            {
+                $("#dtoa").css("background-color","rgba(253, 233, 47, 0.623)");
+            }
+            else
+            {
+                $("#dtoa").css("background-color","rgba(49, 199, 49, 0.568)");
+            }
+
+
+        });
+    </script>
 <div class="body-format" style="padding: 20px; color: #FFFFFF;">
     <div class="d-flex justify-content-between" style="margin-bottom: -15px">
         <div class="p-2">
@@ -218,21 +267,21 @@ $dtoA = number_format((float) $debtToAssets, 2, '.', '');
                 <div class="card-body">
                     <h5 class="card-title">Financial Ratios</h5>
                     <div class="d-flex justify-content-around">
-                        <div class="p-2 rounded" style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
+                        <div class="p-2 rounded" id='currentRatio' style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Current Ratio</b></h3>
                                 <h1 style="text-align: center; font-size:100px"><b><?php echo $C_format; ?></b></h1>
                                 <p style="text-align: center; font-size: 20px">Current Ratio = Assets / Liabilities</p>
                             </div>
                         </div>
-                        <div class="p-2 rounded" style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
+                        <div class="p-2 rounded" id='atoe'style="background-color: rgba(49, 199, 49, 0.568); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Asset-to-Equity</b></h3>
                                 <h1 style="text-align: center; font-size:100px"><b><?php echo $atR_format; ?></b></h1>
                                 <p style="text-align: center; font-size: 20px">Asset-to-Equity = Assets / Equity</p>
                             </div>
                         </div>
-                        <div class="p-2 rounded" style="background-color: rgba(253, 233, 47, 0.623); margin: 10px; width: 30%">
+                        <div class="p-2 rounded" id="dtoa" style="background-color: rgba(253, 233, 47, 0.623); margin: 10px; width: 30%">
                             <div style="padding:20px">
                                 <h3 style="text-align: center"><b>Debt-to-Assets</b></h3>
                                 <h1 style="text-align: center; font-size:100px"><b><?php echo $dtoA; ?></b></h1>
