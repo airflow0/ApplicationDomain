@@ -41,7 +41,7 @@ if (isset($_POST['forgotpassword'])) {
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
 <body>
-<img src="images/logo.png" style="width: 5%;"/>
+<img class="mx-auto d-block" src="images/logo-revised.png" style="width: 15%; padding: 20px">
 <div class="registrationContainer">
 
     <div class="registration-box">
