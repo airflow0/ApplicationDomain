@@ -75,33 +75,33 @@ function updateBalance(PDO $pdo, $referenceID)
         {
             if($debit_money != null)
             {
-                $balance = $balance - $debit_money;
+                $balance = $balance + $debit_money;
             }
             if($credit_money != null)
             {
-                $balance = $balance + $credit_money;
+                $balance = $balance - $credit_money;
             }
         }
         else if ($transaction['accountType'] == 3)
         {
             if($debit_money != null)
             {
-                $balance = $balance - $debit_money;
+                $balance = $balance + $debit_money;
             }
             if($credit_money != null)
             {
-                $balance = $balance + $credit_money;
+                $balance = $balance - $credit_money;
             }
         }
         else if ($transaction['accountType'] == 4)
         {
             if($debit_money != null)
             {
-                $balance = $balance - $debit_money;
+                $balance = $balance + $debit_money;
             }
             if($credit_money != null)
             {
-                $balance = $balance + $credit_money;
+                $balance = $balance - $credit_money;
             }
         }
         else if ($transaction['accountType'] == 5)
